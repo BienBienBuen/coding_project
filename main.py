@@ -14,13 +14,13 @@ api = Api(api_key=api_key)
 
 
 import download_video
-def main():
+def main(user):
     # download newest vid into video folder
     video_id = get_video.get_newest_video(channel_id, api)
-    download_video.download_video(video_id, '/Users/Tiger/Desktop/GitHub/videos')
+    download_video.download_video(video_id, f'/Users/{user}/Desktop/GitHub/videos')
     
 
 
     # video_by_chart = api.get_videos_by_chart(chart="mostPopular", region_code="US", count=2)
-main()
+main('Tiger')
 
