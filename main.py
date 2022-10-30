@@ -32,13 +32,16 @@ def get_channel_info(c_id):
     Channel_info = Channel_by_id.items[0].to_dict()
     return Channel_info
 
-def get_playist_from_channel(c_id):
+def get_upload(c_id):
     info = get_channel_info(c_id)
     playlist_id = info["contentDetails"]["relatedPlaylists"]["uploads"]
-    return playlist_id
+    upload_list = api.get_playlist_items(playlist_id = playlist_id)
+    return upload_list.items[0].to_dict()
+
+
 
 channel_info = get_channel_info(channel_id)
 print(channel_info)
-print(get_playist_from_channel(channel_id))
+print(get_upload(channel_id))
 # video_by_chart = api.get_videos_by_chart(chart="mostPopular", region_code="US", count=2)
 
