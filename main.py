@@ -41,7 +41,8 @@ def get_upload(c_id, number):
         videoID.append(upload_list.items[i].to_dict()["contentDetails"]["videoId"])
     return videoID
 
-
+def get_video():
+    pass
 
 channel_info = get_channel_info(channel_id)
 print(channel_info)
