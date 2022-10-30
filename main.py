@@ -26,17 +26,19 @@ api_key = "AIzaSyAK-BlzaRCnoDG6L0RbHp0spMT1htOEsV8" #这是我youtube的key
 api = Api(api_key=api_key) 
 
 #从一个specific channel里return a list of videos
-def get_playist_from_channel(c_info=dict):
-    pass
 
 def get_channel_info(c_id):
     Channel_by_id = api.get_channel_info(channel_id= c_id)
     Channel_info = Channel_by_id.items[0].to_dict()
-    list_dic = Channel_info.get("relatedPlaylists")
-    playlist_id = list_dic.get("uploads")
+    return Channel_info
+
+def get_playist_from_channel(c_id):
+    info = get_channel_info(c_id)
+    playlist_id = info["contentDetails"]["relatedPlaylists"]["uploads"]
     return playlist_id
 
 channel_info = get_channel_info(channel_id)
-print(channel_info) 
-video_by_chart = api.get_videos_by_chart(chart="mostPopular", region_code="US", count=2)
+print(channel_info)
+print(get_playist_from_channel(channel_id))
+# video_by_chart = api.get_videos_by_chart(chart="mostPopular", region_code="US", count=2)
 
