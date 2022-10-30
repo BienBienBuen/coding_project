@@ -16,7 +16,7 @@ def get_upload(c_id, number, api):
         videoID.append(upload_list.items[i].to_dict()["contentDetails"]["videoId"])
     return videoID
 
-def get_newest_video(c_id):
-    vid_id = get_upload(c_id, 1)
-    return vid_id
+def get_newest_video(c_id, api):
+    vid_id = get_upload(c_id, 1, api)
+    return vid_id[0]
 

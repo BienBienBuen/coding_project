@@ -16,4 +16,3 @@ def download_video(ytid, folder):
         ydl.download('https://www.youtube.com/watch?v=%s' % ytid)
         return True
 
-print(os.getcwd())
