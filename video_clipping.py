@@ -1,10 +1,19 @@
 from pyyoutube import Api
-from yt_dlp import YoutubeDL
-import yt_dlp
+import yt_dlp 
+import os
+#from main import get_newest_video
 
-help(yt_dlp)
-"""
-URLS = ['https://www.youtube.com/watch?v=BaW_jenozKc']
-with YoutubeDL() as ydl:
-    ydl.download(URLS)
-"""
+def download_video(ytid, folder):
+    '''
+    Given a youtube video id and target folder, this function will download video to that folder
+    '''
+
+    ytdl_format_options = {
+        'outtmpl': os.path.join(folder, '%(title)s-%(id)s.%(ext)s')
+    }
+
+    with yt_dlp.YoutubeDL(ytdl_format_options) as ydl:
+        ydl.download('https://www.youtube.com/watch?v=%s' % ytid)
+        return True
+
+print(os.getcwd())
