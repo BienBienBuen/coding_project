@@ -22,7 +22,7 @@ date = re.search('\d+ \w+ ago.*seconds ', info).group()
 from pyyoutube import Api
 
 api_key = "AIzaSyAK-BlzaRCnoDG6L0RbHp0spMT1htOEsV8" #这是我youtube的key
-api = Api(api_key=api_key)
+api = Api(api_key=api_key) 
 
 Channel_by_id = api.get_channel_info(channel_id= channel_id)
 print(Channel_by_id.items[0].to_dict())
