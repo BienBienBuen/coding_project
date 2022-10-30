@@ -1,14 +1,13 @@
 
-
 #All available info from channel
-def get_channel_info(c_id):
+def get_channel_info(c_id, api):
     Channel_by_id = api.get_channel_info(channel_id= c_id)
     Channel_info = Channel_by_id.items[0].to_dict()
     return Channel_info
 
 #从一个specific channel里return a list of video ID
-def get_upload(c_id, number):
-    info = get_channel_info(c_id)
+def get_upload(c_id, number, api):
+    info = get_channel_info(c_id, api)
     playlist_id = info["contentDetails"]["relatedPlaylists"]["uploads"]
     upload_list = api.get_playlist_items(playlist_id = playlist_id)
     videoID = []
