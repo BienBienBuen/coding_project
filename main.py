@@ -1,7 +1,7 @@
 import requests
 import re
 import datetime
-import get_video
+import search_video
 from pyyoutube import Api
 
 # Daily scraping channel: Golden Hoops
@@ -14,13 +14,17 @@ api = Api(api_key=api_key)
 
 
 import download_video
+import get_video_info
+
 def main(user):
     # download newest vid into video folder
-    video_id = get_video.get_newest_video(channel_id, api)
-    download_video.download_video(video_id, f'/Users/{user}/Desktop/GitHub/videos')
+
+    video_id = search_video.get_newest_video(channel_id, api)
+    print(video_id)
+    #download_video.download_video(video_id, f'/Users/{user}/Desktop/GitHub/videos')
     
-
-
+    video_length = get_video_info.get_video_length(video_id, api)
+    print(video_length)
     # video_by_chart = api.get_videos_by_chart(chart="mostPopular", region_code="US", count=2)
 main('Tiger')
 
