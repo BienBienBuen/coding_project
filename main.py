@@ -25,6 +25,18 @@ from pyyoutube import Api
 api_key = "AIzaSyAK-BlzaRCnoDG6L0RbHp0spMT1htOEsV8" #这是我youtube的key
 api = Api(api_key=api_key) 
 
-Channel_by_id = api.get_channel_info(channel_id= channel_id)
-print(Channel_by_id.items[0].to_dict()) 
+#从一个specific channel里return a list of videos
+def get_playist_from_channel(c_id):
+    list_by_channel = api.get_playlists(channel_id=c_id)
+    playlist = list_by_channel
+    return playlist
+
+def get_video_info(c_id):
+    Channel_by_id = api.get_channel_info(channel_id= c_id)
+    Channel_info = Channel_by_id.items[0].to_dict()
+    return Channel_info
+
+print(get_video_info(channel_id)) 
+print(get_playist_from_channel(channel_id))
+video_by_chart = api.get_videos_by_chart(chart="mostPopular", region_code="US", count=2)
 
