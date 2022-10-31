@@ -5,9 +5,9 @@ def get_video_info(video_id, api):
 def get_useful_info(video_id, api):
     video_info = get_video_info(video_id, api)
     return {
-        'title': video_info['title'],
-        'tags': video_info['tags'],
-        'categoryId': video_info['categoryId'],
+        'title': video_info['snippet']['title'],
+        'tags': video_info['snippet']['tags'],
+        'categoryId': video_info['snippet']['categoryId'],
         'contentDetails': video_info['contentDetails'],
         'stattistics': video_info['statistics']
     }

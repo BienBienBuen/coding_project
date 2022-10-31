@@ -1,5 +1,6 @@
-import moviepy.editor as mpy
 import os
+os.environ["IMAGEIO_FFMPEG_EXE"] = "/opt/homebrew/Cellar/ffmpeg/5.1.2/bin/ffmpeg"
+import moviepy.editor as mpy
 import random
 
 #test video and time_stamps
@@ -15,7 +16,9 @@ def create_new_dir(video_name):
         if letter == '.': break
         else: new += letter
     new += '_remake_collection'
-    path = os.path.join('/Users/Tiger/Desktop/GitHub/videos/', new)
+    #comment out the other path on your local repository
+    # path = os.path.join('/Users/Tiger/Desktop/GitHub/videos/', new)
+    path = os.path.join('/Users/bx/Documents/GitHub/coding_project/videos/', new) 
     os.mkdir(path)
     return path
 
@@ -28,7 +31,9 @@ def put_new_dir(final_video_clips, path):
 def generate_final_clips(video_name, time_stamps, time_limit):
     dir_path = create_new_dir(video_name)
     random.shuffle(time_stamps)
-    path = os.path.join('/Users/Tiger/Desktop/GitHub/videos/', video_name)
+    #comment out the other path on your local repository
+    #path = os.path.join('/Users/Tiger/Desktop/GitHub/videos/', video_name)
+    path = os.path.join('/Users/bx/Documents/GitHub/coding_project/videos/', video_name)
     video = mpy.VideoFileClip(path)
     audio = mpy.AudioFileClip(path)
     index = 0
