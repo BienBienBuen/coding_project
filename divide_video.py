@@ -63,7 +63,7 @@ def generate_final_clips(video_name, time_stamps, time_limit):
         print(22)
         final_video_clips.append(final_video_clip)
         print(33)
-    put_new_dir(video_name, final_video_clips, dir_path)
+    put_new_dir(final_video_clips, dir_path)
         
        
 
