@@ -1,4 +1,5 @@
 import os
+# os.environ["IMAGEIO_FFMPEG_EXE"] = "/usr/bin/ffmpeg"
 os.environ["IMAGEIO_FFMPEG_EXE"] = "/opt/homebrew/Cellar/ffmpeg/5.1.2/bin/ffmpeg"
 import moviepy.editor as mpy
 import random

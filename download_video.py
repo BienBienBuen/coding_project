@@ -29,6 +29,8 @@ def download_video(ytid, folder, Api):
         try:
             os.rename(old_name, new_name)
         except FileExistsError:
-            download_count += 1
+            while FileExistsError:
+                download_count += 1
+            
             os.rename(old_name, new_name)
         return True
