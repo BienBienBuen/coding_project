@@ -21,10 +21,7 @@ def main(user):
 
     video_id = search_video.get_newest_video(channel_id, api)
     print(video_id)
-    #download_video.download_video(video_id, f'/Users/{user}/Desktop/GitHub/videos')
-    
-    video_length = get_video_info.get_video_length(video_id, api)
-    print(video_length)
-    # video_by_chart = api.get_videos_by_chart(chart="mostPopular", region_code="US", count=2)
+    download_video.download_video(ytid = video_id, folder = 'videos')
+    video_by_chart = api.get_videos_by_chart(chart="mostPopular", region_code="US", count=2)
 main('Tiger')
 

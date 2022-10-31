@@ -4,7 +4,7 @@ import yt_dlp
 import os
 #from main import get_newest_video
 
-def download_video(ytid, folder, name):
+def download_video(ytid, folder):
     '''
     Given a youtube video id and target folder, this function will download video to that folder
     '''
@@ -14,6 +14,6 @@ def download_video(ytid, folder, name):
     }
 
     with yt_dlp.YoutubeDL(ytdl_format_options) as ydl:
-        ydl.download('https://www.youtube.com/watch?v=%s' % ytid, name=name)
+        ydl.download('https://www.youtube.com/watch?v=%s' % ytid )
         return True
 
