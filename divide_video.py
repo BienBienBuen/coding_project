@@ -19,10 +19,10 @@ def create_new_dir(video_name):
     os.mkdir(path)
     return path
 
-def put_new_dir(video_name, final_video_clips, path):
+def put_new_dir(final_video_clips, path):
     
-    #for clip in final_video_clips:
-    final_video_clips.write_videofile(path, fps=30, threads=1, codec="libx264")
+    for clip in final_video_clips:
+        clip.write_videofile(path, fps=30, threads=1, codec="libx264")
     return
 
 def generate_final_clips(video_name, time_stamps, time_limit):
@@ -57,7 +57,7 @@ def generate_final_clips(video_name, time_stamps, time_limit):
         print(22)
         final_video_clips.append(final_video_clip)
         print(33)
-    put_new_dir(video_name, final_video_clip, dir_path)
+    put_new_dir(video_name, final_video_clips, dir_path)
         
        
 
