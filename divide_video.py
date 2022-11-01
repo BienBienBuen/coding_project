@@ -59,8 +59,8 @@ def generate_final_clips(video_name, time_stamps, time_limit):
             audio_clip.append(audio_subclip)
 
         final_video_clip = mpy.concatenate_videoclips(video_clip)
-        final_audio_clip = mpy.concatenate_audioclips(audio_clip)
-        final_video_clip.audio = final_audio_clip
+        #final_audio_clip = mpy.concatenate_audioclips(audio_clip)
+        #final_video_clip.audio = final_audio_clip
         final_video_clip.write_videofile(path, fps=30, threads=1, codec="libx264")
         final_video_clip.close()
     #put_new_dir(final_video_clip, dir_path)
