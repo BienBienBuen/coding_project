@@ -7,7 +7,7 @@ import random
 #test video and time_stamps
 
 time_stamps1 = [(0, 20)]
-time_stamps = [(0, 20), (20, 30), (30, 45), (45, 87), (87, 100), (100, 120),(120,140)] 
+time_stamps = [(0, 20), (20, 30), (30, 45)] 
 # time_stamps are found by algo which segments video 
 
 time_limit = 60
@@ -39,29 +39,27 @@ def generate_final_clips(video_name, time_stamps, time_limit):
     video = mpy.VideoFileClip(path)
     audio = mpy.AudioFileClip(path)
     index = 0
-    final_video_clips = []
+    accumulated_time = 0
+    video_clip, audio_clip = [], []
     #find groups of subclips that fit time limit
     print(11111)
-    while index < len(time_stamps):
-        start_index = index
-        accumulated_time = 0
+    while index < len(time_stamps) and accumulated_time + (time_stamps[index][1] - time_stamps[index][0]) <= time_limit:
         if index < len(time_stamps) and accumulated_time + (time_stamps[index][1] - time_stamps[index][0]) <= time_limit:
-            accumulated_time += time_stamps[index][1] - time_stamps[index][0]
-            index += 1
-        print(index)
-        # group subclips 
-        video_clip, audio_clip = [], []
-        for i in range(start_index, index):
-            start, end = time_stamps[i][0], time_stamps[i][1]
+            accumulated_time += (time_stamps[index][1] - time_stamps[index][0])
+            print(index)
+            # group subclips 
+            start, end = time_stamps[index][0], time_stamps[index][1]
             video_subclip = video.subclip(start, end)
             audio_subclip = audio.subclip(start, end)
             video_clip.append(video_subclip)
             audio_clip.append(audio_subclip)
+            index += 1
 
-        final_video_clip = mpy.concatenate_videoclips(video_clip)
-        final_audio_clip = mpy.concatenate_audioclips(audio_clip)
-        final_video_clip.audio = final_audio_clip
-    final_video_clip.write_videofile(path, fps=30, threads=1, codec="libx264")
+    final_video_clip = mpy.concatenate_videoclips(video_clip)
+    final_audio_clip = mpy.concatenate_audioclips(audio_clip)
+    final_video_clip.audio = final_audio_clip
+    destination = '/Users/bx/Documents/GitHub/coding_project/videos/vid1.mp4'
+    final_video_clip.write_videofile(destination, fps=30, threads=1, codec="libx264")
     final_video_clip.close()
     #put_new_dir(final_video_clip, dir_path)
         
@@ -73,6 +71,6 @@ def generate_final_clips(video_name, time_stamps, time_limit):
 
 
 
-generate_final_clips('vid1.mp4', time_stamps, 60)
+generate_final_clips('Dad Slander.mp4', time_stamps, 60)
 
 
