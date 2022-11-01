@@ -5,10 +5,10 @@ import search_video
 from pyyoutube import Api
 
 # Daily scraping channel: Golden Hoops
-# channel = "https://www.youtube.com/channel/UCoDfZzwJNFJ2lVgF41tUX0A"
-# channel_id = "UCoDfZzwJNFJ2lVgF41tUX0A"
-channel = "https://www.youtube.com/channel/UCEjOSbbaOfgnfRODEEMYlCw"
-channel_id = "UCEjOSbbaOfgnfRODEEMYlCw"
+channel = "https://www.youtube.com/channel/UCoDfZzwJNFJ2lVgF41tUX0A"
+channel_id = "UCoDfZzwJNFJ2lVgF41tUX0A"
+#channel = "https://www.youtube.com/channel/UCEjOSbbaOfgnfRODEEMYlCw"
+#channel_id = "UCEjOSbbaOfgnfRODEEMYlCw"
 #html = requests.get(channel + "/videos").text
 
 api_key = "AIzaSyAK-BlzaRCnoDG6L0RbHp0spMT1htOEsV8" #这是我youtube的key

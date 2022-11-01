@@ -12,7 +12,8 @@ def download_video(ytid, folder, Api):
     '''
 
     ytdl_format_options = {
-        'outtmpl': os.path.join(folder, '%(title)s-%(id)s.%(ext)s')
+        'outtmpl': os.path.join(folder, '%(title)s-%(id)s.%(ext)s'),
+        'format': 'mp4'
     }
 
     with yt_dlp.YoutubeDL(ytdl_format_options) as ydl:
@@ -41,3 +42,4 @@ def download_video(ytid, folder, Api):
             count = download_count
         """
         return True
+        
