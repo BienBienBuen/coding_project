@@ -2,7 +2,7 @@ import os
 import cv2
 os.environ["IMAGEIO_FFMPEG_EXE"] = "/opt/homebrew/Cellar/ffmpeg@4/4.4.3/bin/ffmpeg"
 
-path = os.path.join('/Users/bx/Documents/GitHub/coding_project/videos/Dad Slander.mp4')
+
 
 """
 os.mkdir(path)
@@ -19,15 +19,11 @@ final = mpy.concatenate_videoclips(list)
 """
 import moviepy.editor as mpy
 
-
-cap = cv2.VideoCapture(path)
-
-video_fps = cap.get(cv2.CAP_PROP_FPS),
-total_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT)
-height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
-
-print(total_frames)
-
+path = os.path.join('/Users/bx/Documents/GitHub/coding_project/videos/Dad Slander.mp4')
 video = mpy.VideoFileClip(path)
-cap.write_videofile('/Users/bx/Documents/GitHub/coding_project/videos/', codec = 'libx264')
+subclip1 = video.subclip(0,5)
+subclip2 = video.subclip(10, 15)
+list = [subclip1, subclip2]
+final = mpy.concatenate_videoclips(list)
+final.write_videofile('/Users/bx/Documents/GitHub/coding_project/videos/vid1.mp4', codec = 'libx264')
+final.close()
