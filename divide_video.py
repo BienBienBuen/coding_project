@@ -1,6 +1,6 @@
 import os
 # os.environ["IMAGEIO_FFMPEG_EXE"] = "/usr/bin/ffmpeg"
-os.environ["IMAGEIO_FFMPEG_EXE"] = "/opt/homebrew/Cellar/ffmpeg@4/4.4.3/bin/ffmpeg"
+# os.environ["IMAGEIO_FFMPEG_EXE"] = "/opt/homebrew/Cellar/ffmpeg@4/4.4.3/bin/ffmpeg"
 import moviepy.editor as mpy
 import random
 
@@ -18,8 +18,8 @@ def create_new_dir(video_name):
         else: new += letter
     new += '_remake_collection'
     #comment out the other path on your local repository
-    # path = os.path.join('/Users/Tiger/Desktop/GitHub/videos/', new)
-    path = os.path.join('/Users/bx/Documents/GitHub/coding_project/videos/', new) 
+    path = os.path.join('/Users/Tiger/Desktop/GitHub/videos/', new)
+    #path = os.path.join('/Users/bx/Documents/GitHub/coding_project/videos/', new) 
     os.mkdir(path)
     return path
 """
@@ -34,8 +34,8 @@ def generate_final_clips(video_name, time_stamps, time_limit):
     # dir_path = create_new_dir(video_name)
     random.shuffle(time_stamps)
     #comment out the other path on your local repository
-    # path = os.path.join('/Users/Tiger/Desktop/GitHub/videos/', video_name)
-    path = os.path.join('/Users/bx/Documents/GitHub/coding_project/videos/', video_name)
+    path = os.path.join('/Users/Tiger/Desktop/GitHub/coding_project/videos/', video_name)
+    #path = os.path.join('/Users/bx/Documents/GitHub/coding_project/videos/', video_name)
     video = mpy.VideoFileClip(path)
     audio = mpy.AudioFileClip(path)
     index = 0
@@ -58,7 +58,8 @@ def generate_final_clips(video_name, time_stamps, time_limit):
     final_video_clip = mpy.concatenate_videoclips(video_clip)
     final_audio_clip = mpy.concatenate_audioclips(audio_clip)
     final_video_clip.audio = final_audio_clip
-    destination = '/Users/bx/Documents/GitHub/coding_project/videos/vid1.mp4'
+    #destination = '/Users/bx/Documents/GitHub/coding_project/videos/vid1.mp4'
+    destination = '/Users/Tiger/Desktop/GitHub/coding_project/videos/vid1.mp4'
     final_video_clip.write_videofile(destination, fps=30, threads=1, codec="libx264")
     final_video_clip.close()
     #put_new_dir(final_video_clip, dir_path)

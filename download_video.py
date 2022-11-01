@@ -23,8 +23,8 @@ def download_video(ytid, folder, Api):
         #yt-dlp下载视频名字的format是webm,要改成mp4
         video_name = title_standardized + '-' + ytid + '.webm'
         numbered_name = 'vid' + str(download_count) + '.mp4'
-        path_name = '/Users/bx/Documents/GitHub/coding_project/videos/'
-
+        #path_name = '/Users/bx/Documents/GitHub/coding_project/videos/'
+        path_name = '/Users/Tiger/Desktop/GitHub/coding_project/videos/'
         old_name = os.path.join(path_name, video_name)
         new_name = os.path.join(path_name, numbered_name)  
 
