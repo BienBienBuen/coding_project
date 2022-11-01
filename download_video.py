@@ -17,6 +17,7 @@ def download_video(ytid, folder, Api):
 
     with yt_dlp.YoutubeDL(ytdl_format_options) as ydl:
         ydl.download('https://www.youtube.com/watch?v=%s' % ytid )
+        """
         info = get_video_info.get_useful_info(ytid, Api)
         #title 有的时候符号下载下来不一样
         title_standardized = info['title'].replace('|','｜')
@@ -38,4 +39,5 @@ def download_video(ytid, folder, Api):
                 os.rename(old_name, os.path.join(path_name, new_numbered_name))
 
             count = download_count
+        """
         return True
