@@ -7,7 +7,7 @@ import random
 #test video and time_stamps
 
 time_stamps1 = [(0, 20)]
-time_stamps = [(0, 20), (20, 30), (30, 45)] 
+time_stamps = [(0, 20), (20, 30), (30, 45),(50, 59)] 
 # time_stamps are found by algo which segments video 
 
 time_limit = 60
@@ -58,6 +58,7 @@ def generate_final_clips(video_name, time_stamps, time_limit):
     final_video_clip = mpy.concatenate_videoclips(video_clip)
     final_audio_clip = mpy.concatenate_audioclips(audio_clip)
     final_video_clip.audio = final_audio_clip
+    #这个是一个placeholder mp4 file, 用来承载final video
     destination = '/Users/bx/Documents/GitHub/coding_project/videos/vid1.mp4'
     final_video_clip.write_videofile(destination, fps=30, threads=1, codec="libx264")
     final_video_clip.close()
