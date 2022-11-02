@@ -7,7 +7,7 @@ import random
 #test video and time_stamps
 
 time_stamps1 = [(0, 20)]
-time_stamps = [(0, 20), (20, 30), (30, 45),(50, 59)] 
+time_stamps = [(0, 5), (10, 15), (20, 25),(30, 35)] 
 # time_stamps are found by algo which segments video 
 
 time_limit = 60
@@ -72,6 +72,6 @@ def generate_final_clips(video_name, time_stamps, time_limit):
 
 
 
-generate_final_clips('Dad Slander.mp4', time_stamps, 60)
+generate_final_clips('lebron.mp4', time_stamps, 60)
 
 
