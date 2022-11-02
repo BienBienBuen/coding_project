@@ -1,5 +1,39 @@
 import cv2
 import time
+import os
+import js2py
+
+path = os.path.join('/Users/bx/Documents/GitHub/coding_project/videos/Dad Slander.mp4')
+cap = cv2.VideoCapture(path)
+
+
+js1 = """
+function escramble_758(){
+var a,b,c
+a='+1 '
+b='84-'
+a+='425-'
+b+='7450'
+c='9'
+document.write(a+c+b)
+}
+escramble_758()
+""".replace("document.write", "return ")
+
+js2 = """
+var search = require('youtube-heatmap');
+getHeatMap('https://www.youtube.com/watch?v=_lEzN8C5c7k')
+    .then(heatMap => {
+        console.log(heatMap)
+    })
+"""
+result = js2py.eval_js(js1)
+cap = cv2.VideoCapture(path)
+
+video_fps = cap.get(cv2.CAP_PROP_FPS),
+total_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT)
+height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
 
 vid = cv2.VideoCapture('1.mp4')
 """
