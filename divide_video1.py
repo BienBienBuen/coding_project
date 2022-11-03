@@ -14,8 +14,8 @@ def create_new_dir(video_name):
         else: new += letter
     new_name = new + '_remake_collection'
     #comment out the other path on your local repository
-    # path = os.path.join('/Users/Tiger/Desktop/GitHub/videos/', new_name)
-    path = os.path.join('/Users/bx/Documents/GitHub/coding_project/videos/', new_name) 
+    path = os.path.join('/Users/Tiger/Desktop/GitHub/coding_project/videos/', new_name)
+    #path = os.path.join('/Users/bx/Documents/GitHub/coding_project/videos/', new_name) 
     os.mkdir(path)
     return path, new
 
@@ -24,8 +24,8 @@ def generate_final_clips(video_name, time_stamps, time_limit):
     dir_path, name = create_new_dir(video_name)
     random.shuffle(time_stamps)
     #comment out the other path on your local repository
-    #path = os.path.join('/Users/Tiger/Desktop/GitHub/coding_project/videos/', video_name)
-    path = os.path.join('/Users/bx/Documents/GitHub/coding_project/videos/', video_name)
+    path = os.path.join('/Users/Tiger/Desktop/GitHub/coding_project/videos/', video_name)
+    #path = os.path.join('/Users/bx/Documents/GitHub/coding_project/videos/', video_name)
     video = mpy.VideoFileClip(path)
     audio = mpy.AudioFileClip(path)
     index = 0
@@ -57,8 +57,8 @@ def generate_final_clips(video_name, time_stamps, time_limit):
         final_video_clip = mpy.concatenate_videoclips(video_clip)
         final_audio_clip = mpy.concatenate_audioclips(audio_clip)
         final_video_clip.audio = final_audio_clip
-        destination = os.path.join(dir_path, f'{name}{sub_clip_count}.mp4')
-        final_video_clip.write_videofile(destination, fps=30, threads=1, codec="libx264")
+        destination = os.path.join(dir_path, f'{name}_{sub_clip_count}.mp4')
+        final_video_clip.write_videofile(destination, fps=30, threads=4, codec="libx264")
         final_video_clip.close()
 
 

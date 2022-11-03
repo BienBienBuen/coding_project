@@ -4,8 +4,8 @@ import os
 # import js2py
 
 path_1 = '/Users/bx/Documents/GitHub/coding_project/videos/Dad Slander.mp4'
-path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/videos/ha.mp4'
-cap = cv2.VideoCapture(path_1)
+path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/videos/vid3.mp4'
+cap = cv2.VideoCapture(path_2)
 video_fps = cap.get(cv2.CAP_PROP_FPS),
 total_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT)
 height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
@@ -52,7 +52,7 @@ from scenedetect import open_video, SceneManager, split_video_ffmpeg
 from scenedetect.detectors import ContentDetector
 from scenedetect.video_splitter import split_video_ffmpeg
 
-def split_video_into_scenes(video_path, threshold=79):
+def split_video_into_scenes(video_path, threshold=75):
     # Open our video, create a scene manager, and add a detector.
     video = open_video(video_path)
     scene_manager = SceneManager()
@@ -71,6 +71,6 @@ def standardize_scene_list(scene_list):
         timestamp.append(stamp)
     return timestamp
 
-# test
-# x = split_video_into_scenes(path_1)
-# print(standardize_scene_list(x))
+#test
+x = split_video_into_scenes(path_2)
+print(standardize_scene_list(x))
