@@ -6,16 +6,16 @@ import get_video_info
 
 #from main import get_newest_video
 
-def download_video(ytid, folder, Api):
+def download_video(ytid, path, Api):
     
     #check number of files in directory
-    number_count = len([name for name in os.listdir(folder) if os.path.isfile(os.path.join(folder, name))])
+    number_count = len([name for name in os.listdir(path) if os.path.isfile(os.path.join(path, name))])
     '''
     Given a youtube video id and target folder, this function will download video to that folder
     '''
 
     ytdl_format_options = {
-        'outtmpl': os.path.join(folder, '%(title)s.%(ext)s'),
+        'outtmpl': os.path.join(path, '%(title)s.%(ext)s'),
         'format': 'mp4',
     }
 
@@ -30,10 +30,8 @@ def download_video(ytid, folder, Api):
         title_standardized2 = title_standardized1.replace('?','？')
         video_name = title_standardized2 + '.mp4'
         numbered_name = 'vid' + str(number_count) + '.mp4'
-        path_name = '/Users/bx/Documents/GitHub/coding_project/videos/'
-        #path_name = '/Users/Tiger/Desktop/GitHub/coding_project/videos/'
-        old_name = os.path.join(path_name, video_name)
-        new_name = os.path.join(path_name, numbered_name)  
+        old_name = os.path.join(path, video_name)
+        new_name = os.path.join(path, numbered_name)  
         
         try:
             os.rename(old_name, new_name)

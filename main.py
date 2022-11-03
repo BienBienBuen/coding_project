@@ -26,33 +26,35 @@ import download_video
 import get_video_info
 import divide_video1
 import detect_background_change
-import get_video_info
 import translate
+#import translate
 
-def main():
+def main(path):
     # download newest vid into video folder
     video_id = search_video.get_newest_video(channel_id, api)
-    sub = translate.get_subtitle(video_id, path_1)
-    # download_video.download_video(ytid = video_id, folder = path_1, Api = api)
+    #sub = translate.get_subtitle(video_id, path_1)
+    translate.download_video(ytid = video_id, path = path, Api = api)
     
 
     #translate video title
-    title_eng = get_video_info.get_useful_info(video_id, api)
+    title_eng = get_video_info.get_useful_info(video_id, api)['title']
     title_chi = get_video_info.translate(title_eng)
     print(title_chi)
 
     # need the name of the video fronm download_video func
-    number_count = len([name for name in os.listdir(path_1) if os.path.isfile(os.path.join(path_1, name))])
+    number_count = len([name for name in os.listdir(path_2) if os.path.isfile(os.path.join(path, name))])
     vid_name = 'vid' + str(number_count-1) + '.mp4'
     # print(vid_name)
-    scene_list = detect_background_change.split_video_into_scenes(os.path.join(path_1, vid_name), threshold=75)
+    scene_list = detect_background_change.split_video_into_scenes(os.path.join(path, vid_name), threshold=75)
     time_stamps = detect_background_change.standardize_scene_list(scene_list)
 
-    # divide_video1.generate_final_clips(vid_name, time_stamps, time_limit)
+    divide_video1.generate_final_clips(vid_name, time_stamps, time_limit, path)
     
-    translate.generate_subtitles()
+    #translate.generate_subtitles()
 
-main()
+main(path_2)
+
+
 
 
 # 直接将motivational speech的稿子翻译成中文然后放原来的sound track

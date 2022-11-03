@@ -34,16 +34,6 @@ def get_video_length(video_id, api):
     
     return time
 
-
-from pyyoutube import Api
-api_key = "AIzaSyAK-BlzaRCnoDG6L0RbHp0spMT1htOEsV8" #这是我youtube的key
-api = Api(api_key=api_key)
-folder = 'videos'
-path_1 = '/Users/bx/Documents/GitHub/coding_project/videos/'
-path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/videos/'
-v = '7jz5abFcmvE'
-title = (get_useful_info(v, api)['title'])
-
 from googletrans import Translator
 SPECIAL_CASES = {
     'ee': 'et',
@@ -161,7 +151,8 @@ def translate(original_text):
     translator = Translator()
     translation = translator.translate(original_text, src = 'en', dest= 'zh-cn')
     return translation.text
-print(translate('haha you fool'))
+
+
 
 
 

@@ -7,25 +7,21 @@ import random
 
 # time_stamps are found by algo which segments video 
 
-def create_new_dir(video_name):
+def create_new_dir(video_name, path):
     new = ''
     for letter in video_name:
         if letter == '.': break
         else: new += letter
     new_name = new + '_remake_collection'
-    #comment out the other path on your local repository
-    #path = os.path.join('/Users/Tiger/Desktop/GitHub/coding_project/videos/', new_name)
-    path = os.path.join('/Users/bx/Documents/GitHub/coding_project/videos/', new_name) 
+    path = os.path.join(path, new_name) 
     os.mkdir(path)
     return path, new
 
-def generate_final_clips(video_name, time_stamps, time_limit):
+def generate_final_clips(video_name, time_stamps, time_limit, path):
     sub_clip_count = 0
-    dir_path, name = create_new_dir(video_name)
+    dir_path, name = create_new_dir(video_name, path)
     random.shuffle(time_stamps)
-    #comment out the other path on your local repository
-    #path = os.path.join('/Users/Tiger/Desktop/GitHub/coding_project/videos/', video_name)
-    path = os.path.join('/Users/bx/Documents/GitHub/coding_project/videos/', video_name)
+    path = os.path.join(path, video_name)
     video = mpy.VideoFileClip(path)
     audio = mpy.AudioFileClip(path)
     index = 0
