@@ -14,8 +14,8 @@ def create_new_dir(video_name):
         else: new += letter
     new_name = new + '_remake_collection'
     #comment out the other path on your local repository
-    path = os.path.join('/Users/Tiger/Desktop/GitHub/coding_project/videos/', new_name)
-    #path = os.path.join('/Users/bx/Documents/GitHub/coding_project/videos/', new_name) 
+    #path = os.path.join('/Users/Tiger/Desktop/GitHub/coding_project/videos/', new_name)
+    path = os.path.join('/Users/bx/Documents/GitHub/coding_project/videos/', new_name) 
     os.mkdir(path)
     return path, new
 
@@ -24,8 +24,8 @@ def generate_final_clips(video_name, time_stamps, time_limit):
     dir_path, name = create_new_dir(video_name)
     random.shuffle(time_stamps)
     #comment out the other path on your local repository
-    path = os.path.join('/Users/Tiger/Desktop/GitHub/coding_project/videos/', video_name)
-    #path = os.path.join('/Users/bx/Documents/GitHub/coding_project/videos/', video_name)
+    #path = os.path.join('/Users/Tiger/Desktop/GitHub/coding_project/videos/', video_name)
+    path = os.path.join('/Users/bx/Documents/GitHub/coding_project/videos/', video_name)
     video = mpy.VideoFileClip(path)
     audio = mpy.AudioFileClip(path)
     index = 0

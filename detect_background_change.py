@@ -5,7 +5,7 @@ import os
 
 path_1 = '/Users/bx/Documents/GitHub/coding_project/videos/Dad Slander.mp4'
 path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/videos/vid3.mp4'
-cap = cv2.VideoCapture(path_2)
+cap = cv2.VideoCapture(path_1)
 video_fps = cap.get(cv2.CAP_PROP_FPS),
 total_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT)
 height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
@@ -72,5 +72,5 @@ def standardize_scene_list(scene_list):
     return timestamp
 
 #test
-x = split_video_into_scenes(path_2)
-print(standardize_scene_list(x))
+# x = split_video_into_scenes(path_1)
+# print(standardize_scene_list(x))

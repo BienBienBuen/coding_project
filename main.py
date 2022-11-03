@@ -27,11 +27,13 @@ import get_video_info
 import divide_video1
 import detect_background_change
 import get_video_info
+import translate
+
 def main():
     # download newest vid into video folder
     video_id = search_video.get_newest_video(channel_id, api)
-    print(video_id)
-    download_video.download_video(ytid = video_id, folder = path_2, Api = api)
+    sub = translate.get_subtitle(video_id, path_1)
+    # download_video.download_video(ytid = video_id, folder = path_1, Api = api)
     
 
     #translate video title
@@ -40,12 +42,15 @@ def main():
     print(title_chi)
 
     # need the name of the video fronm download_video func
-    number_count = len([name for name in os.listdir(path_2) if os.path.isfile(os.path.join(path_2, name))])
-    vid_name = 'vid' + str(number_count) + '.mp4'
-    scene_list = detect_background_change.split_video_into_scenes(os.path.join(path_2, vid_name), threshold=75)
+    number_count = len([name for name in os.listdir(path_1) if os.path.isfile(os.path.join(path_1, name))])
+    vid_name = 'vid' + str(number_count-1) + '.mp4'
+    # print(vid_name)
+    scene_list = detect_background_change.split_video_into_scenes(os.path.join(path_1, vid_name), threshold=75)
     time_stamps = detect_background_change.standardize_scene_list(scene_list)
-    divide_video1.generate_final_clips(vid_name, time_stamps, time_limit)
+
+    # divide_video1.generate_final_clips(vid_name, time_stamps, time_limit)
     
+    translate.generate_subtitles()
 
 main()
 

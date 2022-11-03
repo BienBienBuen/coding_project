@@ -22,17 +22,16 @@ def download_video(ytid, folder, Api):
     with yt_dlp.YoutubeDL(ytdl_format_options) as ydl:
         url = 'https://www.youtube.com/watch?v=%s' % ytid
         ydl.download(url)
-        
         info_dict = ydl.extract_info(url, download=False)
         video_title = info_dict.get('title', None)
         #info = get_video_info.get_useful_info(ytid, Api)
         #title 有的时候符号下载下来不一样
-        title_standardized = video_title.replace('|','｜')
-        #title_standardized = video_title.replace('?','？')
-        video_name = title_standardized + '.mp4'
+        title_standardized1 = video_title.replace('|','｜')
+        title_standardized2 = title_standardized1.replace('?','？')
+        video_name = title_standardized2 + '.mp4'
         numbered_name = 'vid' + str(number_count) + '.mp4'
-        #path_name = '/Users/bx/Documents/GitHub/coding_project/videos/'
-        path_name = '/Users/Tiger/Desktop/GitHub/coding_project/videos/'
+        path_name = '/Users/bx/Documents/GitHub/coding_project/videos/'
+        #path_name = '/Users/Tiger/Desktop/GitHub/coding_project/videos/'
         old_name = os.path.join(path_name, video_name)
         new_name = os.path.join(path_name, numbered_name)  
         
