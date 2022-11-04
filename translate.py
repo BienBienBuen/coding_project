@@ -6,6 +6,7 @@ import webbrowser
 import requests
 import json
 import csv
+from pyannote.audio import Pipeline
 
 # if video has subtitles from yt-dlp, we import them directly
 # returns subtitle and their timestamp
@@ -21,13 +22,11 @@ def get_subtitle(ytid, folder):
         url = 'https://www.youtube.com/watch?v=%s' % ytid
         info_dict = ydl.extract_info(url, download=False)
         subtitles = info_dict.get('subtitles')
-        dest = folder + 'sub.csv'
 
-        with open(dest, 'w', encoding='utf-8', newline='') as subfile:
-
-            for sub_info in subtitles.items():
-                sub_format = sub_info[0]
-
+        for sub_info in subtitles.items():
+            sub_format = sub_info[0]
+            dest = folder + 'sub' + str(sub_format)+'.csv'
+            with open(dest, 'w', encoding='utf-8', newline='') as subfile:
                 if sub_format == 'en-GB': #'zh-hans' or 'zh-CN' or 'zh_CN' or 
                     sub_url = sub_info[1][0]['url']
                     response = requests.get(sub_url)
@@ -40,12 +39,12 @@ def get_subtitle(ytid, folder):
                             writer.writerow([key, value])
 
                 else:
-                    print("no subtitles")    
+                    os.remove(dest)
         # 这个东西本来可以call后直接下载subtitles， 但是他这个已经用不了了，github上好多index name都改了      
         # ydl._write_subtitles(info_dict, dest)
 
-get_subtitle('7uEgS8ZnSaA', folder1)
-
+get_subtitle('7uEgS8ZnSaA', folder)
+get_subtitle('fXb02MQ78yQ', folder)
 # inputs some text/subtitle, and translate it into chinese
 # returns chinese subtitle and their timestamp
 from googletrans import Translator
@@ -170,7 +169,7 @@ def translate(original_text):
 # inputs a txt file, length of target video, outputs mp3
 def generate_audio():
     pass
-
+        
 # inputs chinese subtitles, 
 # #overlay them into videos
 def generate_subtitles():
