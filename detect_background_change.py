@@ -52,9 +52,9 @@ from scenedetect import open_video, SceneManager, split_video_ffmpeg
 from scenedetect.detectors import ContentDetector
 from scenedetect.video_splitter import split_video_ffmpeg
 
-def split_video_into_scenes(video_path, threshold):
+def split_video_into_scenes(path, threshold):
     # Open our video, create a scene manager, and add a detector.
-    video = open_video(video_path)
+    video = open_video(path)
     scene_manager = SceneManager()
     scene_manager.add_detector(
         ContentDetector(threshold=threshold))
