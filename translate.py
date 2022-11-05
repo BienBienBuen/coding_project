@@ -31,20 +31,23 @@ def get_subtitle(ytid, folder):
                     sub_url = sub_info[1][0]['url']
                     response = requests.get(sub_url)
                     parse = json.loads(response.content)
+                    print(parse)
                     info = parse['events']
                     #write
+                    """
                     writer = csv.writer(subfile)
                     for i in range (len(info)):
                         for key, value in info[i].items():
                             writer.writerow([key, value])
-
+                    
                 else:
                     os.remove(dest)
+                    """
         # 这个东西本来可以call后直接下载subtitles， 但是他这个已经用不了了，github上好多index name都改了      
         # ydl._write_subtitles(info_dict, dest)
 
-get_subtitle('7uEgS8ZnSaA', folder)
-get_subtitle('fXb02MQ78yQ', folder)
+get_subtitle('7uEgS8ZnSaA', folder1)
+#get_subtitle('fXb02MQ78yQ', folder1)
 # inputs some text/subtitle, and translate it into chinese
 # returns chinese subtitle and their timestamp
 from googletrans import Translator
