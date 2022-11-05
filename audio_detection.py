@@ -2,6 +2,7 @@ import requests
 import json
 token = "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"
 
+
 API_URL = "https://api-inference.huggingface.co/models/pyannote/speaker-diarization"
 headers = {"Authorization": f"Bearer {token}"}
 
@@ -11,7 +12,7 @@ def query(filename):
     response = requests.request("POST", API_URL, headers=headers, data=data)
     return json.loads(response.content.decode("utf-8"))
 
-
+path_1 = '/Users/bx/Documents/GitHub/coding_project/videos/audio.wav'
 path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/audios/audio.wav'
 
 from pyannote.audio import Pipeline
