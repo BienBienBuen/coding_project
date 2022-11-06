@@ -4,18 +4,18 @@ import os
 import moviepy.editor as mpy
 from itertools import islice
 path_1 = '/Users/bx/Documents/GitHub/coding_project/audios/audio.wav'
-path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/audios/audio.wav'
-dest = '/Users/bx/Documents/GitHub/coding_project/audios/'
-
-def get_audio(video_path, dest):
-    audio = mpy.AudioFileClip(video_path)
+path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/audios/1.wav'
+dest1 = '/Users/bx/Documents/GitHub/coding_project/audios/'
+dest2 = '/Users/Tiger/Desktop/GitHub/coding_project/audios/'
+def get_audio(audio_path, dest):
+    audio = mpy.AudioFileClip(audio_path)
     audio.write_audiofile(dest)
 
-def divide_audio(audio_path):    
+def divide_audio(audio_path, dest):    
     pipeline = Pipeline.from_pretrained("pyannote/speaker-diarization",
                use_auth_token="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")
 
-    # 4. apply pretrained pipeline
+    # apply pretrained pipeline
     diarization = pipeline(audio_path)
 
     timestamp = []
@@ -26,9 +26,14 @@ def divide_audio(audio_path):
         timestamp_with_speaker.append([speaker[-1], turn.start, turn.end])
     
     timestamp_with_speaker.sort(key=lambda x: x[0]) #sort by which speaker it is
+    print(timestamp_with_speaker)
     sorted_stamp = [[]]
-    for i in range(len(timestamp_with_speaker)-1):
+    for i in range(len(timestamp_with_speaker)):
         k = 0
+        if i == len(timestamp_with_speaker)-1:
+            sorted_stamp[k].append(tuple([timestamp_with_speaker[i][1], 
+                                          timestamp_with_speaker[i][2]]))
+            break
         if timestamp_with_speaker[i][0] == timestamp_with_speaker[i+1][0]:
             sorted_stamp[k].append(tuple([timestamp_with_speaker[i][1], 
                                       timestamp_with_speaker[i][2]]))
@@ -36,19 +41,18 @@ def divide_audio(audio_path):
             sublist = []
             sorted_stamp.append(sublist)
             k += 1
-        if i+1 == len(timestamp_with_speaker):
-            sorted_stamp[k].append(tuple([timestamp_with_speaker[i+1][1], 
-                                          timestamp_with_speaker[i+1][2]]))
+     
     print(sorted_stamp)
     #saving the result
+    """
     final = dest + 'audio.rttm'
     with open(final, "w") as rttm:
         print(2)
         diarization.write_rttm(rttm)
+    """
+    return sorted_stamp
 
-    return timestamp, sorted_stamp
-
-divide_audio(path_1, dest)
+divide_audio(path_2, dest2)
 
 
 def generate_final_audio(video_path, audio_path, dest):
