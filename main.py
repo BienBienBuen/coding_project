@@ -21,7 +21,11 @@ path_1 = '/Users/bx/Documents/GitHub/coding_project/videos/'
 path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/videos/'
 #test time_stamps
 # time_stamps = [(0, 2), (2, 3), [4,5], [11, 12]] 
+<<<<<<< Updated upstream
 time_limit = 500
+=======
+time_limit = 300
+>>>>>>> Stashed changes
 import download_video
 import get_video_info
 import divide_video 
@@ -34,14 +38,19 @@ def main(path):
     video_id = search_video.get_newest_video(channel_id, api)
     #sub = translate.get_subtitle(video_id, path_1)
     download_video.download_video(ytid = video_id, path = path, Api = api)
+<<<<<<< Updated upstream
     print(11)
+=======
+    
+
+>>>>>>> Stashed changes
     #translate video title
     title_eng = get_video_info.get_useful_info(video_id, api)['title']
     title_chi = translate.translate(title_eng)
     print(title_chi)
     
     # need the name of the video fronm download_video func
-    number_count = len([name for name in os.listdir(path_2) if os.path.isfile(os.path.join(path, name))])
+    number_count = len([name for name in os.listdir(path_1) if os.path.isfile(os.path.join(path, name))])
     vid_name = 'vid' + str(number_count-1) + '.mp4'
     # (vid_name)
 
@@ -55,7 +64,7 @@ def main(path):
     
     #translate.generate_subtitles()
 
-main(path_2)
+main(path_1)
 
 
 
