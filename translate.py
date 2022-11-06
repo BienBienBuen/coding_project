@@ -6,7 +6,7 @@ import webbrowser
 import requests
 import json
 import csv
-from pyannote.audio import Pipeline
+
 
 # if video has subtitles from yt-dlp, we import them directly
 # returns subtitle and their timestamp
@@ -34,7 +34,7 @@ def get_subtitle(ytid, folder):
                     print(parse)
                     info = parse['events']
                     #write
-                    """
+                    
                     writer = csv.writer(subfile)
                     for i in range (len(info)):
                         for key, value in info[i].items():
@@ -42,11 +42,11 @@ def get_subtitle(ytid, folder):
                     
                 else:
                     os.remove(dest)
-                    """
+                    
         # 这个东西本来可以call后直接下载subtitles， 但是他这个已经用不了了，github上好多index name都改了      
         # ydl._write_subtitles(info_dict, dest)
 
-get_subtitle('7uEgS8ZnSaA', folder1)
+#get_subtitle('7uEgS8ZnSaA', folder1)
 #get_subtitle('fXb02MQ78yQ', folder1)
 # inputs some text/subtitle, and translate it into chinese
 # returns chinese subtitle and their timestamp

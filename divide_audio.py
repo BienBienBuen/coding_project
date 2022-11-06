@@ -4,7 +4,7 @@ import os
 import moviepy.editor as mpy
 
 audio_path = '/Users/bx/Documents/GitHub/coding_project/audios/'
-
+path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/audio.wav'
 def get_audio(video_path, audio_path):
     audio = mpy.AudioFileClip(video_path)
     audio.write_audiofile(audio_path)
@@ -23,3 +23,5 @@ def divide_audio(audio_path):
     dest = audio_path + 'audio.rttm'
     with open(dest, "w") as rttm:
         diarization.write_rttm(rttm)
+
+divide_audio(path_2)

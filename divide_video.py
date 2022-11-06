@@ -1,12 +1,11 @@
 import os
 # os.environ["IMAGEIO_FFMPEG_EXE"] = "/usr/bin/ffmpeg"
 #os.environ["IMAGEIO_FFMPEG_EXE"] = "/opt/homebrew/Cellar/ffmpeg@4/4.4.3/bin/ffmpeg"
-import moviepy.editor as mpy
+import moviepy as mpy
 import random
 
 
 # time_stamps are found by algo which segments video 
-
 def create_new_dir(video_name, path):
     new = ''
     for letter in video_name:
@@ -19,6 +18,7 @@ def create_new_dir(video_name, path):
 
 def generate_final_clips(video_name, time_stamps, time_limit, path):
     sub_clip_count = 0
+    
     dir_path, name = create_new_dir(video_name, path)
     random.shuffle(time_stamps)
     path = os.path.join(path, video_name)
@@ -56,10 +56,4 @@ def generate_final_clips(video_name, time_stamps, time_limit, path):
         destination = os.path.join(dir_path, f'{name}_{sub_clip_count}.mp4')
         final_video_clip.write_videofile(destination, fps=30, threads=4, codec="libx264")
         final_video_clip.close()
-
-
-
-
-
-
-
+        

@@ -2,7 +2,7 @@ import cv2
 import time
 import os
 # import js2py
-
+"""
 path_1 = '/Users/bx/Documents/GitHub/coding_project/videos/Dad Slander.mp4'
 path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/videos/vid3.mp4'
 cap = cv2.VideoCapture(path_2)
@@ -10,7 +10,7 @@ video_fps = cap.get(cv2.CAP_PROP_FPS),
 total_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT)
 height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
 width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
-
+"""
 js1 = """
 function escramble_758(){
 var a,b,c
