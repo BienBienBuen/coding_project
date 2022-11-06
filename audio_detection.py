@@ -5,6 +5,8 @@ token = "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"
 
 API_URL = "https://api-inference.huggingface.co/models/pyannote/speaker-diarization"
 headers = {"Authorization": f"Bearer {token}"}
+path_1 = '/Users/bx/Documents/GitHub/coding_project/audio.wav'
+path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/audios/audio.wav'
 
 def query(filename):
     with open(filename, "rb") as f:
@@ -12,14 +14,11 @@ def query(filename):
     response = requests.request("POST", API_URL, headers=headers, data=data)
     return json.loads(response.content.decode("utf-8"))
 
-path_1 = '/Users/bx/Documents/GitHub/coding_project/videos/audio.wav'
-path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/audios/audio.wav'
-
 from pyannote.audio import Pipeline
 pipeline = Pipeline.from_pretrained("pyannote/speaker-diarization@2.1",
                                     use_auth_token=token)
 # apply the pipeline to an audio file
-diarization = pipeline("1.wav")
+diarization = pipeline("audio.wav")
 
 # dump the diarization output to disk using RTTM format
 with open("audio.rttm", "w") as rttm:

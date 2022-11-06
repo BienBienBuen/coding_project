@@ -29,5 +29,5 @@ def query(filename):
     response = requests.request("POST", API_URL, headers=headers, data=data)
     return json.loads(response.content.decode("utf-8"))
 
-output = query("/Users/Tiger/Desktop/GitHub/coding_project/1.wav")
+output = query("/Users/bx/Documents/GitHub/coding_project/1.wav")
 print(output)
