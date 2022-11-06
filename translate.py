@@ -168,10 +168,6 @@ def translate(original_text):
     translation = translator.translate(original_text, src = 'en', dest= 'zh-cn')
     return translation.text
     
-#if we want to generate audio from a piece of inspirational text, we call this
-# inputs a txt file, length of target video, outputs mp3
-def generate_audio():
-    pass
         
 # inputs chinese subtitles, 
 # #overlay them into videos
