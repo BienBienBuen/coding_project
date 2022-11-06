@@ -2,19 +2,12 @@ from pyannote.audio import Pipeline
 from pyyoutube import Api
 import os
 import moviepy.editor as mpy
-<<<<<<< Updated upstream
-
-audio_path = '/Users/bx/Documents/GitHub/coding_project/audios/'
-path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/audio.wav'
-def get_audio(video_path, audio_path):
-=======
 from itertools import islice
 path_1 = '/Users/bx/Documents/GitHub/coding_project/audios/audio.wav'
 path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/audios/audio.wav'
 dest = '/Users/bx/Documents/GitHub/coding_project/audios/'
 
 def get_audio(video_path, dest):
->>>>>>> Stashed changes
     audio = mpy.AudioFileClip(video_path)
     audio.write_audiofile(dest)
 
@@ -32,13 +25,6 @@ def divide_audio(audio_path):
         timestamp.append(tuple([turn.start, turn.end]))
         timestamp_with_speaker.append([speaker[-1], turn.start, turn.end])
     
-<<<<<<< Updated upstream
-    dest = audio_path + 'audio.rttm'
-    with open(dest, "w") as rttm:
-        diarization.write_rttm(rttm)
-
-divide_audio(path_2)
-=======
     timestamp_with_speaker.sort(key=lambda x: x[0]) #sort by which speaker it is
     sorted_stamp = [[]]
     for i in range(len(timestamp_with_speaker)-1):
@@ -75,4 +61,3 @@ def generate_final_audio(video_path, audio_path, dest):
         audio_clip.append(audio_subclip)
     final_audio_clip = mpy.concatenate_audioclips(audio_clip)
     
->>>>>>> Stashed changes

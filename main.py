@@ -21,11 +21,7 @@ path_1 = '/Users/bx/Documents/GitHub/coding_project/videos/'
 path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/videos/'
 #test time_stamps
 # time_stamps = [(0, 2), (2, 3), [4,5], [11, 12]] 
-<<<<<<< Updated upstream
-time_limit = 500
-=======
 time_limit = 300
->>>>>>> Stashed changes
 import download_video
 import get_video_info
 import divide_video 
@@ -38,12 +34,8 @@ def main(path):
     video_id = search_video.get_newest_video(channel_id, api)
     #sub = translate.get_subtitle(video_id, path_1)
     download_video.download_video(ytid = video_id, path = path, Api = api)
-<<<<<<< Updated upstream
-    print(11)
-=======
     
 
->>>>>>> Stashed changes
     #translate video title
     title_eng = get_video_info.get_useful_info(video_id, api)['title']
     title_chi = translate.translate(title_eng)
