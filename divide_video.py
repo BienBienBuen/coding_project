@@ -1,9 +1,8 @@
 import os
 # os.environ["IMAGEIO_FFMPEG_EXE"] = "/usr/bin/ffmpeg"
 #os.environ["IMAGEIO_FFMPEG_EXE"] = "/opt/homebrew/Cellar/ffmpeg@4/4.4.3/bin/ffmpeg"
-import moviepy as mpy
+import moviepy.editor as mpy
 import random
-
 
 # time_stamps are found by algo which segments video 
 def create_new_dir(video_name, path):

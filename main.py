@@ -33,7 +33,7 @@ def main(path):
     # download newest vid into video folder
     video_id = search_video.get_newest_video(channel_id, api)
     #sub = translate.get_subtitle(video_id, path_1)
-    download_video.download_video(ytid = video_id, path = path, Api = api)
+    download_video.download_video(ytid = video_id, path = path, format = 'mp4')
     
 
     #translate video title
@@ -50,8 +50,8 @@ def main(path):
     time_stamps = detect_background_change.standardize_scene_list(scene_list)
     """
     divide_video.generate_final_clips(vid_name, time_stamps, time_limit, path)
-    """
     
+    """
     
     
     #translate.generate_subtitles()

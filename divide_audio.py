@@ -4,7 +4,7 @@ import os
 import moviepy.editor as mpy
 from itertools import islice
 path_1 = '/Users/bx/Documents/GitHub/coding_project/audios/audio.wav'
-path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/audios/1.wav'
+path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/audios/multi_speaker.wav'
 dest1 = '/Users/bx/Documents/GitHub/coding_project/audios/'
 dest2 = '/Users/Tiger/Desktop/GitHub/coding_project/audios/'
 def get_audio(audio_path, dest):
