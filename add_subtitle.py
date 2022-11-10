@@ -4,13 +4,16 @@ import re
 time_stamps = [(0.4978125, 7.365937499999999), 
 (8.395312500000003, 23.8359375), 
 (24.9328125, 63.27281250000001)]
-    
+
+path_1 = '/Users/bx/Documents/GitHub/coding_project/videos/vid1.mp4'
+path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/videos/'
+
 def add_subtitle(video_path, audio_id, audio_name):
     video = VideoFileClip(video_path) 
     video = video.volumex(0.8) 
 
     #调用 extract subtitle 放进txt，然后读每一行
-    extract_subtitles(audio_id, audio_name)
+    extract_subtitles.get_captions(audio_id, audio_name)
     nums = ['0','1','2','3','4','5','6','7','8','9']
     with open('testfile02.txt', 'r') as fin:
         line = ' '
@@ -20,18 +23,19 @@ def add_subtitle(video_path, audio_id, audio_name):
                 start = (re.search(r'\d*\W\d{2}\W.{6}', line).group()) 
                 end = (re.search(r' \d*\W\d{2}\W.{6}', line).group())
                 subtitle = fin.readline()[:-1]
-                subtitle = TextClip(subtitle, fontsize = 75, color = 'white') 
-                subtitle = subtitle.set_start(start).set_end(end).set_pos('center').set_duration(10) 
-                video = CompositeVideoClip([video, subtitle]) 
+                subtitle_clip = TextClip(subtitle, fontsize = 75, color = 'white') 
+                subtitle_final = subtitle_clip.set_start(start).set_end(end).set_pos('center').set_duration(10) 
+                video = CompositeVideoClip([video, subtitle_final]) 
                 
             line = fin.readline()
     video.ipython_display(width = 280) 
+
     """
     destination = os.path.join(dir_path, f'{name}_{sub_clip_count}.mp4')
     final_video_clip.write_videofile(destination, fps=30, threads=4, codec="libx264")
     final_video_clip.close()
     """
-add_subtitle()
+add_subtitle(path_1, 'fLeJJPxua3E', 'vid1')
 
 def convert_time1(num, string):
 

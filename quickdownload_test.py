@@ -1,8 +1,11 @@
 import yt_dlp
 import os
  
+path_1 = '/Users/bx/Documents/GitHub/coding_project/videos/'
+path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/videos/'
+
 ytdl_format_options = {
-        'outtmpl': os.path.join('/Users/Tiger/Desktop/GitHub/coding_project/videos/', '%(title)s.%(ext)s'),
+        'outtmpl': os.path.join(path_1, '%(title)s.%(ext)s'),
         'format': 'mp4',
     }
 
