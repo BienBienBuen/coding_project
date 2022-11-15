@@ -20,6 +20,7 @@ def download_video(ytid, path, format):
         video_title = info_dict.get('title', None)
         #info = get_video_info.get_useful_info(ytid, Api)
         #title 有的时候符号下载下来不一样
+        """
         title_standardized1 = video_title.replace('|','｜')
         title_standardized2 = title_standardized1.replace('?','？')
         video_name = title_standardized2 + format
@@ -31,7 +32,6 @@ def download_video(ytid, path, format):
             os.rename(old_name, new_name)
         except FileExistsError:
             pass
-        
+        """
         return True
    
-download_video('fLeJJPxua3E', '/Users/Tiger/Desktop/GitHub/coding_project/audios/', 'mp4')

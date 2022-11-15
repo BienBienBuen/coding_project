@@ -46,7 +46,7 @@ def get_subtitle(ytid, folder):
         # 这个东西本来可以call后直接下载subtitles， 但是他这个已经用不了了，github上好多index name都改了      
         # ydl._write_subtitles(info_dict, dest)
 
-get_subtitle('7uEgS8ZnSaA', folder)
+
 #get_subtitle('fXb02MQ78yQ', folder1)
 # inputs some text/subtitle, and translate it into chinese
 # returns chinese subtitle and their timestamp

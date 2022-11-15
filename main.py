@@ -25,24 +25,22 @@ time_limit = 300
 import download_video
 import get_video_info
 import divide_video 
-print(1)
 import detect_background_change
 import translate
 
-def main(path):
+def sports_highlight(path):
     # download newest vid into video folder
     video_id = search_video.get_newest_video(channel_id, api)
     #sub = translate.get_subtitle(video_id, path_1)
     download_video.download_video(ytid = video_id, path = path, format = 'mp4')
     
-
     #translate video title
     title_eng = get_video_info.get_useful_info(video_id, api)['title']
     title_chi = translate.translate(title_eng)
     print(title_chi)
     
     # need the name of the video fronm download_video func
-    number_count = len([name for name in os.listdir(path_1) if os.path.isfile(os.path.join(path, name))])
+    number_count = len([name for name in os.listdir(path) if os.path.isfile(os.path.join(path, name))])
     vid_name = 'vid' + str(number_count-1) + '.mp4'
     # (vid_name)
 
@@ -53,13 +51,6 @@ def main(path):
     
     """
     
-    
-    #translate.generate_subtitles()
-
-main(path_1)
+sports_highlight(path_2)
 
 
-
-
-# 直接将motivational speech的稿子翻译成中文然后放原来的sound track
-# english sound track + 中文文案

@@ -19,6 +19,9 @@ def add_subtitle(video_path, audio_id, audio_name):
             if line[0] in nums:
                 start = (re.search(r'\d*\W\d{2}\W.{6}', line).group()) 
                 end = (re.search(r' \d*\W\d{2}\W.{6}', line).group())
+
+                # need a function to see if it matches the timestamps given
+
                 subtitle = fin.readline()[:-1]
                 subtitle = TextClip(subtitle, fontsize = 75, color = 'white') 
                 subtitle = subtitle.set_start(start).set_end(end).set_pos('center').set_duration(10) 
