@@ -1,16 +1,45 @@
 from moviepy.editor import *
-import extract_subtitles
 import re
 time_stamps = [(0.4978125, 7.365937499999999), 
 (8.395312500000003, 23.8359375), 
 (24.9328125, 63.27281250000001)]
+import yt_dlp 
+import requests
+import re
+import json
+
+# link: https://stackoverflow.com/questions/53659427/python-retrieve-automatic-captions-with-youtube-dl-and-transform-to-transcript
+
+def get_captions(video_id, video_name):
+    url = 'youtube.com/watch?v=' + video_id
+    ydl = yt_dlp.YoutubeDL({'writesubtitles': True, 'allsubtitles': True, 'writeautomaticsub': True})
+    res = ydl.extract_info(url, download=False)
+    #name = res.get('title', None)
     
+    if res['requested_subtitles'] and res['requested_subtitles']['en']:
+        print('Grabbing vtt file from ' + res['requested_subtitles']['en']['url'])
+        response = requests.get(res['requested_subtitles']['en']['url'], stream=True)
+        f1 = open(f"{video_name}.txt", "w")
+        """
+        new = re.sub(r'\d{2}\W\d{2}\W\d{2}\W\d{3}\s\W{3}\s\d{2}\W\d{2}\W\d{2}\W\d{3}\ align:start position:0%',repl = '',string = response.text)
+        new = re.sub(r'.*</c>',repl = '',string = new)
+        """
+        f1.write(response.text)
+        f1.close()
+        if len(res['subtitles']) > 0:
+            print('manual captions')
+        else:
+            print('automatic_captions')
+    else:
+        print('Youtube Video does not have any english captions')
+   
+
 def add_subtitle(video_path, audio_id, audio_name):
     video = VideoFileClip(video_path) 
     video = video.volumex(0.8) 
 
     #调用 extract subtitle 放进txt，然后读每一行
-    extract_subtitles(audio_id, audio_name)
+    get_captions(audio_id, audio_name)
     nums = ['0','1','2','3','4','5','6','7','8','9']
     with open('testfile02.txt', 'r') as fin:
         line = ' '
@@ -35,6 +64,9 @@ def add_subtitle(video_path, audio_id, audio_name):
     final_video_clip.close()
     """
 add_subtitle()
+
+def match_sub(line):
+
 
 def convert_time1(num, string):
 

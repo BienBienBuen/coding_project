@@ -1,7 +1,7 @@
 import requests
 import re
 import datetime
-import search_video
+
 from pyyoutube import Api
 import os
 
@@ -17,24 +17,25 @@ channel_id = "UCoDfZzwJNFJ2lVgF41tUX0A"
 api_key = "AIzaSyAK-BlzaRCnoDG6L0RbHp0spMT1htOEsV8" #这是我youtube的key
 api = Api(api_key=api_key)
 folder = 'videos'
-path_1 = '/Users/bx/Documents/GitHub/coding_project/videos/'
-path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/videos/'
+path_1 = '/Users/bx/Documents/GitHub/coding_project/videos/video storage'
+path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/video storage'
 #test time_stamps
 # time_stamps = [(0, 2), (2, 3), [4,5], [11, 12]] 
 time_limit = 300
-import download_video
-import get_video_info
-import divide_video 
-import detect_background_change
-import translate
 
 def sports_highlight(path):
+    import sys, os
+    sys.path.append(path + 'videos')
+    import download_video, get_video_info, divide_video, detect_background_change, search_video
+    
+    
     # download newest vid into video folder
     video_id = search_video.get_newest_video(channel_id, api)
     #sub = translate.get_subtitle(video_id, path_1)
     download_video.download_video(ytid = video_id, path = path, format = 'mp4')
     
     #translate video title
+    import translate
     title_eng = get_video_info.get_useful_info(video_id, api)['title']
     title_chi = translate.translate(title_eng)
     print(title_chi)
@@ -50,7 +51,8 @@ def sports_highlight(path):
     divide_video.generate_final_clips(vid_name, time_stamps, time_limit, path)
     
     """
+#sports_highlight(path_2)
+#def motivational_speech(path):
     
-sports_highlight(path_2)
-
+print(os.getcwd())
 
