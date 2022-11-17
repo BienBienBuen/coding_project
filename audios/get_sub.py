@@ -7,7 +7,7 @@ import json
 path_1 = '/Users/bx/Documents/GitHub/coding_project/audios_storage/'
 path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/audios_storage/'
 
-def get_captions(video_id, video_name, path):
+def get_sub(video_id, video_name, path):
     url = 'youtube.com/watch?v=' + video_id
     ydl = yt_dlp.YoutubeDL({'writesubtitles': True, 'allsubtitles': True, 'writeautomaticsub': True})
     res = ydl.extract_info(url, download=False)
@@ -32,4 +32,4 @@ def get_captions(video_id, video_name, path):
    
 
 if __name__ == '__main__':
-    get_captions("CDxHbfFDvxo", 'testfile02', path_2) 
+    get_sub("CDxHbfFDvxo", 'testfile2', path_2) 
