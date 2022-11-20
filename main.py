@@ -17,17 +17,18 @@ channel_id = "UCoDfZzwJNFJ2lVgF41tUX0A"
 api_key = "AIzaSyAK-BlzaRCnoDG6L0RbHp0spMT1htOEsV8" #这是我youtube的key
 api = Api(api_key=api_key)
 folder = 'videos'
-path_1 = '/Users/bx/Documents/GitHub/coding_project/videos/video storage'
-path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/video storage'
+path_1 = '/Users/bx/Documents/GitHub/coding_project/'
+path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/'
 #test time_stamps
 # time_stamps = [(0, 2), (2, 3), [4,5], [11, 12]] 
 time_limit = 300
 
 def sports_highlight(path):
+    path += 'videos'
     import sys, os
     sys.path.append(path + 'videos')
+    sys.path.append(path + 'audios')
     import download_video, get_video_info, divide_video, detect_background_change, search_video
-    
     
     # download newest vid into video folder
     video_id = search_video.get_newest_video(channel_id, api)
@@ -41,8 +42,8 @@ def sports_highlight(path):
     print(title_chi)
     
     # need the name of the video fronm download_video func
-    number_count = len([name for name in os.listdir(path) if os.path.isfile(os.path.join(path, name))])
-    vid_name = 'vid' + str(number_count-1) + '.mp4'
+    #number_count = len([name for name in os.listdir(path) if os.path.isfile(os.path.join(path, name))])
+    #vid_name = 'vid' + str(number_count-1) + '.mp4'
     # (vid_name)
 
     scene_list = detect_background_change.split_video_into_scenes(os.path.join(path, vid_name), threshold=75)
@@ -52,7 +53,33 @@ def sports_highlight(path):
     
     """
 #sports_highlight(path_2)
-#def motivational_speech(path):
+
+
+def motivational_speech(path):
+    path += audios
+    import sys, os
+    sys.path.append(path + 'videos')
+    sys.path.append(path + 'audios')
+    import add_sub, get_sub, translate, txt_to_list, download_video
     
-print(os.getcwd())
+    # download newest vid into video folder
+    video_id = search_video.get_newest_video(channel_id, api)
+    #sub = translate.get_subtitle(video_id, path_1)
+    download_video.download_video(ytid = video_id, path = path, format = 'mp4')
+    
+    #translate video title
+    title_eng = get_video_info.get_useful_info(video_id, api)['title']
+    title_chi = translate.translate(title_eng)
+    print(title_chi)
+
+    ### need to work on naming
+    get_sub(video_id, title_chi, path+'audios_storage')
+    sub_txt_path = path + 'audios_storage' + title_chi + '.txt'
+    sub_list = txt_to_list(sub_txt_path, [])
+    
+
+
+
+
+
 

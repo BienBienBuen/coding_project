@@ -1,7 +1,7 @@
 import re
 
-def convert(txt, list):
-    with open(txt, 'r') as fin:
+def convert_to_list(input_path, list):
+    with open(input_path, 'r') as fin:
         line = ' '
         nums = ['0','1','2','3','4','5','6','7','8','9']
         while len(line) != 0:
@@ -13,15 +13,14 @@ def convert(txt, list):
                 while True:
                     new = fin.readline()[:-1]
                     
-                    if len(new) == 0:
-                        break
-                    else:
-                        subtitle += ' ' + new
-
+                    if len(new) == 0: break
+                    else: subtitle += ' ' + new
                 list.append([start, end, subtitle])
                 
             line = fin.readline()
         return list
-print(convert('testfile02.txt', []))
+
+#test need to move the file
+print(convert_to_list('testfile02.txt', []))
 
 
