@@ -171,6 +171,3 @@ def translate(original_text):
         
 # inputs chinese subtitles, 
 # #overlay them into videos
-def generate_subtitles():
-
-    pass
