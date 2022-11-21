@@ -77,8 +77,8 @@ def login1(driver):
 
 import undetected_chromedriver as uc
 options = uc.ChromeOptions()
-options.headless = True
-options.add_experimental_option("debuggerAddress", "127.0.0.1:5003")
+#options.headless = True
+#options.add_experimental_option("debuggerAddress", "127.0.0.1:5003")
 #options.add_argument("user-data-dir=/Users/Tiger/Library/Application Support/Google/Chrome/Profile 8")
 #options.add_argument = ("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36")
 driver = uc.Chrome(use_subprocess=True)

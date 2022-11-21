@@ -23,19 +23,7 @@ if __name__ == '__main__':
     # 'user-agent="Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36"')
     # 下载的驱动的地址
     chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows Phone 10.0; Android 4.2.1; Microsoft; Lumia 640 XL LTE) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Mobile Safari/537.36 Edge/12.10166")
-    #driver = webdriver.Chrome('/opt/homebrew/bin/chromedriver')
-    import undetected_chromedriver as uc
-    options = uc.ChromeOptions()
-    options.add_argument("user-agent=Mozilla/5.0 (Windows Phone 10.0; Android 4.2.1; Microsoft; Lumia 640 XL LTE) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Mobile Safari/537.36 Edge/12.10166")
-    driver = uc.Chrome(use_subprocess=True)
-    driver.get("https://stackoverflow.com/")
-    driver.maximize_window()
-    driver.find_element(By.XPATH, '/html/body/header/div/nav/ol/li[3]/a').click()
-    time.sleep(2)
-    driver.find_element(By.XPATH, '//*[@id="openid-buttons"]/button[1]').click()
-    time.sleep(2)
-    driver.find_element(By.XPATH, '//*[@id="identifierId"]').send_keys('tigerzouxk@gmail.com')
-    driver.find_element(By.XPATH, '//*[@id="identifierNext"]/div/button/span').click()
+    driver = webdriver.Chrome('/opt/homebrew/bin/chromedriver')
     
     time.sleep(2)
     password = input('google account password: ')
@@ -43,9 +31,6 @@ if __name__ == '__main__':
     driver.find_element(By.XPATH, '//*[@id="passwordNext"]/div/button/span').click()
     time.sleep(5)
 
-    
-    
-    
     driver.get('https://www.douyin.com/user/MS4wLjABAAAAvOU5GclmETa4jehXAEspnMfYJQZAbwcJzfUFhZk4cP8')
     # 选择网页元素
     # 防止滑动完之后能渠道之前的视频，做了一个已访问集合

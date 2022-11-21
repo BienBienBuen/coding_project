@@ -62,7 +62,7 @@ def read_sub(sub_path):
 
 read_sub("/Users/bx/Documents/GitHub/coding_project/vid1.txt")
     
-def generate_subtitles(path, dest, sub_path):
+def generate_subtitles(video_path, dest, sub_path):
 
     generator = lambda txt: TextClip(txt, font='Arial', fontsize=24, color='white')
     """
@@ -74,7 +74,7 @@ def generate_subtitles(path, dest, sub_path):
     #sub 的 format 可以是直接一个list，timestamp和subtitle都在list里
     subs = read_sub(sub_path)
     subtitles = SubtitlesClip(subs, generator)
-    video = VideoFileClip(path)
+    video = VideoFileClip(video_path)
     result = CompositeVideoClip([video, subtitles.set_pos(('center','bottom'))])
     result.write_videofile(dest + "output.mp4", fps=video.fps, temp_audiofile="temp-audio.m4a", remove_temp=True, codec="libx264", audio_codec="aac")
 
