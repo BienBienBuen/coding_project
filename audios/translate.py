@@ -168,6 +168,8 @@ def translate(original_text):
     translation = translator.translate(original_text, src = 'en', dest= 'zh-cn')
     return translation.text
     
-        
+def audio_to_txt():
+    pass
+
 # inputs chinese subtitles, 
 # #overlay them into videos
