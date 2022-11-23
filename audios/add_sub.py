@@ -105,13 +105,32 @@ def read_sub(sub_path):
 
             subtitle_list = [lines[i][j] for j in range(len(lines[i])-1) if j > 0]
             subtitle = "".join(subtitle_list)
-
-            final_tuple = (time_tuple, translate.translate(subtitle))
+            final_tuple = (time_tuple, subtitle) 
             subs.append(final_tuple)
-            #test
-            print(final_tuple)
+
+        #merge subs
         subs.pop(0)
-    return subs
+        sub_f = []
+        sub_t = ""
+        counter = 0
+        for i in range (len(subs)):
+            if subs[i][1][-1] != ".":
+                sub_t = sub_t + " " + subs[i][1]
+                counter += 1
+            else:
+                time = (subs[i-counter][0][0], subs[i][0][1])
+                sub_t = sub_t + " " + subs[i][1]
+                #change translate.translate(subtitle) to subtitle for original sub
+                #sub_f.append(tuple([time, sub_t]))
+                sub_f.append(tuple([time, translate.translate(sub_t)]))
+                sub_t = ""
+                counter = 0
+        """
+        test
+        for i in range(len(sub_f)):
+            print(sub_f[i])
+        """
+    return sub_f
 
 read_sub("/Users/bx/Documents/GitHub/coding_project/vid1.txt")
     
@@ -134,7 +153,7 @@ def generate_subtitles(video_path, dest, sub_path):
 path = "/Users/bx/Documents/GitHub/coding_project/videos/vid1.mp4"
 dest = "/Users/bx/Documents/GitHub/coding_project/videos/"
 sub_path = "/Users/bx/Documents/GitHub/coding_project/vid1.txt"
-generate_subtitles(path, dest, sub_path)
+#generate_subtitles(path, dest, sub_path)
 
 
 
