@@ -5,3 +5,6 @@ print(t)
 
 z = s.strip()
 print(z)
+
+from moviepy.editor import TextClip
+print ( TextClip.list("font") )
