@@ -1,7 +1,6 @@
 import requests
 import re
 import datetime
-
 from pyyoutube import Api
 import os
 
@@ -24,16 +23,17 @@ path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/'
 time_limit = 300
 
 def sports_highlight(path):
-    # path += 'videos'
-    # import sys, os
-    # sys.path.append(path + 'videos')
-    # sys.path.append(path + 'audios')
-    import download_video, get_video_info, divide_video, detect_background_change, search_video
+    path += 'videos'
+    import sys, os
+    sys.path.append(path + 'videos')
+    sys.path.append(path + 'audios')
+   
+    from videos import download_video, get_video_info, divide_video, detect_background_change, search_video
     
     # download newest vid into video folder
     video_id = search_video.get_newest_video(channel_id, api)
     #sub = translate.get_subtitle(video_id, path_1)
-    download_video.download_video(ytid = video_id, path = path, format = 'mp4')
+    print(download_video.download_video(ytid = video_id, path = path, format = 'mp4'))
     
     #translate video title
     import translate
@@ -44,7 +44,7 @@ def sports_highlight(path):
     # need the name of the video fronm download_video func
     #number_count = len([name for name in os.listdir(path) if os.path.isfile(os.path.join(path, name))])
     #vid_name = 'vid' + str(number_count-1) + '.mp4'
-    # (vid_name)
+    
 
     scene_list = detect_background_change.split_video_into_scenes(os.path.join(path, vid_name), threshold=75)
     time_stamps = detect_background_change.standardize_scene_list(scene_list)
@@ -52,7 +52,7 @@ def sports_highlight(path):
     divide_video.generate_final_clips(vid_name, time_stamps, time_limit, path)
     
     """
-#sports_highlight(path_2)
+sports_highlight(path_2)
 
 
 def motivational_speech(path):

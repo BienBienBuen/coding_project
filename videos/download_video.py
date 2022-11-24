@@ -2,7 +2,7 @@ from unicodedata import name
 from pyyoutube import Api
 import yt_dlp 
 import os
-import get_video_info
+from videos import get_video_info
 
 #from main import get_newest_video
 
@@ -33,5 +33,5 @@ def download_video(ytid, path, format):
         except FileExistsError:
             pass
         """
-        return True
+        return video_title
    
