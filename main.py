@@ -24,10 +24,10 @@ path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/'
 time_limit = 300
 
 def sports_highlight(path):
-    path += 'videos'
-    import sys, os
-    sys.path.append(path + 'videos')
-    sys.path.append(path + 'audios')
+    # path += 'videos'
+    # import sys, os
+    # sys.path.append(path + 'videos')
+    # sys.path.append(path + 'audios')
     import download_video, get_video_info, divide_video, detect_background_change, search_video
     
     # download newest vid into video folder
@@ -56,11 +56,11 @@ def sports_highlight(path):
 
 
 def motivational_speech(path):
-    path += audios
-    import sys, os
-    sys.path.append(path + 'videos')
-    sys.path.append(path + 'audios')
-    import add_sub, get_sub, translate, txt_to_list, download_video
+    # path += "audios"
+    # import sys, os
+    # sys.path.append(path + 'videos')
+    # sys.path.append(path + 'audios')
+    import add_sub, get_sub, translate, txt_to_list, download_video, search_video, get_video_info
     
     # download newest vid into video folder
     video_id = search_video.get_newest_video(channel_id, api)
