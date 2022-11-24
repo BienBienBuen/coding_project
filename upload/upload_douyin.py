@@ -112,12 +112,17 @@ description = 'i love you babyyyy'
 title = 'haha'
 tags = 'wow'
 vid_type = ('体育', '球类项目')
+<<<<<<< Updated upstream
 
 upload_douyin('/Users/Tiger/Desktop/GitHub/coding_project/cookies/speech.csv', 
 driver, 'https://creator.douyin.com/creator-micro/content/upload', video_path, cover_path, title, vid_type,tags)
 chrome_options = webdriver.ChromeOptions()
 prefs = {'download.default_directory' : ''}
 chrome_options.add_experimental_option('prefs', prefs)
+=======
+upload_douyin('/Users/Tiger/Desktop/GitHub/coding_project/cookies/cookies - ben.csv', 
+driver, 'https://creator.douyin.com/creator-micro/content/upload', video_path, cover_path,  title, vid_type,tags)
+>>>>>>> Stashed changes
 
 def text_to_audio(cookie_path, driver, url, text):
     # 登录
@@ -181,4 +186,8 @@ def move_file(old_dir, new_dir):
 #move_file('/Users/Tiger/Downloads', '/Users/Tiger/Desktop')
     
 
+<<<<<<< Updated upstream
 #text_to_audio('/Users/Tiger/Desktop/GitHub/coding_project/cookies/百宝音.csv', driver, 'https://peiyin.baibaoyin.com/', '你好吗')
+=======
+# text_to_audio('/Users/Tiger/Desktop/GitHub/coding_project/cookies/百宝音.csv', driver, 'https://peiyin.baibaoyin.com/', '你好吗')
+>>>>>>> Stashed changes
