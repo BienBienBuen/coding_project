@@ -1,7 +1,6 @@
 import requests
 import re
 import datetime
-
 from pyyoutube import Api
 import os
 
@@ -22,7 +21,6 @@ path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/'
 #test time_stamps
 # time_stamps = [(0, 2), (2, 3), [4,5], [11, 12]] 
 time_limit = 300
-
 def sports_highlight(path):
     # path += 'videos'
     # import sys, os
@@ -42,8 +40,8 @@ def sports_highlight(path):
     print(title_chi)
     
     # need the name of the video fronm download_video func
-    #number_count = len([name for name in os.listdir(path) if os.path.isfile(os.path.join(path, name))])
-    #vid_name = 'vid' + str(number_count-1) + '.mp4'
+    number_count = len([name for name in os.listdir(path) if os.path.isfile(os.path.join(path, name))])
+    vid_name = 'vid' + str(number_count-1) + '.mp4'
     # (vid_name)
 
     scene_list = detect_background_change.split_video_into_scenes(os.path.join(path, vid_name), threshold=75)
@@ -52,7 +50,7 @@ def sports_highlight(path):
     divide_video.generate_final_clips(vid_name, time_stamps, time_limit, path)
     
     """
-#sports_highlight(path_2)
+sports_highlight(path_1)
 
 
 def motivational_speech(path):
