@@ -2,7 +2,8 @@ from unicodedata import name
 from pyyoutube import Api
 import yt_dlp 
 import os
-from videos import get_video_info
+import get_video_info
+from unidecode import unidecode
 
 #from main import get_newest_video
 
@@ -18,12 +19,12 @@ def download_video(ytid, path, format):
         ydl.download(url)
         info_dict = ydl.extract_info(url, download=False)
         video_title = info_dict.get('title', None)
+        title_standardized = unidecode(video_title)
         #info = get_video_info.get_useful_info(ytid, Api)
         #title 有的时候符号下载下来不一样
-        """
-        title_standardized1 = video_title.replace('|','｜')
-        title_standardized2 = title_standardized1.replace('?','？')
-        video_name = title_standardized2 + format
+        # title_standardized1 = video_title.replace('|','｜')
+        # title_standardized2 = title_standardized1.replace('?','？')
+        video_name = title_standardized + format
         numbered_name = 'vid' + str(number_count) + format
         old_name = os.path.join(path, video_name)
         new_name = os.path.join(path, numbered_name)  
@@ -32,6 +33,12 @@ def download_video(ytid, path, format):
             os.rename(old_name, new_name)
         except FileExistsError:
             pass
-        """
-        return video_title
-   
+
+        return True
+
+# test
+"""
+print(ord("｜"))
+print(ord(unidecode("｜")))
+print(ord("|"))
+"""
