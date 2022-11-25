@@ -2,7 +2,6 @@ from unicodedata import name
 from pyyoutube import Api
 import yt_dlp 
 import os
-import get_video_info
 from unidecode import unidecode
 
 #from main import get_newest_video
@@ -37,6 +36,7 @@ def download_video(ytid, path, format):
         return True
 
 # test
+
 """
 print(ord("｜"))
 print(ord(unidecode("｜")))

@@ -4,11 +4,19 @@ import datetime
 from pyyoutube import Api
 import os
 
+from videos import download_video
+from videos import get_video_info
+from videos import search_video
+from videos import detect_background_change
+from videos import search_video
+
+from audios import add_sub
+
 # Daily scraping channel: Golden Hoops
-channel = "https://www.youtube.com/channel/UCoDfZzwJNFJ2lVgF41tUX0A"
-channel_id = "UCoDfZzwJNFJ2lVgF41tUX0A"
-#channel = "https://www.youtube.com/channel/UCEjOSbbaOfgnfRODEEMYlCw"
-#channel_id = "UCEjOSbbaOfgnfRODEEMYlCw"
+#channel = "https://www.youtube.com/channel/UCoDfZzwJNFJ2lVgF41tUX0A"
+#channel_id = "UCoDfZzwJNFJ2lVgF41tUX0A"
+channel = "https://www.youtube.com/channel/UCEjOSbbaOfgnfRODEEMYlCw"
+channel_id = "UCEjOSbbaOfgnfRODEEMYlCw"
 #channel = "https://www.youtube.com/channel/UC3L9XPe0_FGfRG-CMGtBvFg"
 #channel_id = "UC3L9XPe0_FGfRG-CMGtBvFg"
 #html = requests.get(channel + "/videos").text
@@ -26,7 +34,7 @@ def sports_highlight(path):
     # import sys, os
     # sys.path.append(path + 'videos')
     # sys.path.append(path + 'audios')
-    import download_video, get_video_info, divide_video, detect_background_change, search_video
+    # import download_video, get_video_info, divide_video, detect_background_change, search_video
     
     # download newest vid into video folder
     video_id = search_video.get_newest_video(channel_id, api)
