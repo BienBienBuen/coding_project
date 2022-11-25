@@ -32,4 +32,5 @@ def get_sub(video_id, video_name, path):
    
 
 if __name__ == '__main__':
-    get_sub("CDxHbfFDvxo", 'testfile2', path_2) 
+    # get_sub("CDxHbfFDvxo", 'testfile2', path_2) 
+    get_sub("wrMvtIrvdrA", 'vid3', path_1)

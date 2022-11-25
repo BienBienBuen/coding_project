@@ -21,6 +21,6 @@ def convert_to_list(input_path, list):
         return list
 
 #test need to move the file
-print(convert_to_list('testfile02.txt', []))
+# print(convert_to_list('testfile02.txt', []))
 
 

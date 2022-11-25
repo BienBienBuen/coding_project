@@ -89,7 +89,7 @@ from moviepy.editor import *
 from moviepy.video.tools.subtitles import SubtitlesClip
 from moviepy.config import change_settings
 # change_settings({"IMAGEMAGICK_BINARY": "/usr/local/Cellar/imagemagick/6.9.6-2/bin/convert"})
-def read_sub(sub_path):
+def read_sub(sub_path, translate_bool):
     with open(sub_path) as f:
         lines = []
         temp_list = []
@@ -105,38 +105,47 @@ def read_sub(sub_path):
 
             subtitle_list = [lines[i][j] for j in range(len(lines[i])-1) if j > 0]
             subtitle = "".join(subtitle_list)
-            final_tuple = (time_tuple, subtitle) 
+
+            if translate_bool == True:
+                final_tuple = (time_tuple, translate.translate(subtitle)) 
+            else:
+                final_tuple = (time_tuple, subtitle)
             subs.append(final_tuple)
+        subs.pop(0)
 
         #merge subs
-        subs.pop(0)
-        sub_f = []
-        sub_t = ""
-        counter = 0
-        for i in range (len(subs)):
-            if subs[i][1][-1] != ".":
-                sub_t = sub_t + " " + subs[i][1]
-                counter += 1
-            else:
-                time = (subs[i-counter][0][0], subs[i][0][1])
-                sub_t = sub_t + " " + subs[i][1]
-                #change translate.translate(subtitle) to subtitle for original sub
-                #sub_f.append(tuple([time, sub_t]))
-                sub_f.append(tuple([time, translate.translate(sub_t)]))
-                sub_t = ""
-                counter = 0
         """
         test
         for i in range(len(sub_f)):
             print(sub_f[i])
         """
+    return subs
+
+def merge_subs(sub):
+    subs = sub
+    sub_f = []
+    sub_t = ""
+    counter = 0
+    for i in range (len(subs)):
+        if subs[i][1][-1] != ".":
+            sub_t = sub_t + " " + subs[i][1]
+            counter += 1
+        else:
+            time = (subs[i-counter][0][0], subs[i][0][1])
+            sub_t = sub_t + " " + subs[i][1]
+            #change translate.translate(subtitle) to subtitle for original sub
+            #sub_f.append(tuple([time, sub_t]))
+            sub_f.append(tuple([time, translate.translate(sub_t)]))
+            sub_t = ""
+            counter = 0
     return sub_f
 
-read_sub("/Users/bx/Documents/GitHub/coding_project/vid1.txt")
-    
-def generate_subtitles(video_path, dest, sub_path):
+# sub = read_sub("/Users/bx/Documents/GitHub/coding_project/vid3.txt", translate_bool=True)
 
-    generator = lambda txt: TextClip(txt, font="Songti-SC-Black", fontsize=40, color='white')
+def generate_subtitles(video_path, dest, sub_path, bool):
+
+    generator = lambda txt: TextClip(txt, font="Songti-SC-Black", fontsize=40, 
+                                    color='black', bg_color = 'yellow', align='south')
     """
     subs = [((0, 4), 'subs1'),
             ((4, 9), 'subs2'),
@@ -144,16 +153,21 @@ def generate_subtitles(video_path, dest, sub_path):
             ((12, 16), 'subs4')]
     """
     #sub 的 format 可以是直接一个list，timestamp和subtitle都在list里
-    subs = read_sub(sub_path)
+    if bool == True:
+        subs = read_sub(sub_path, translate_bool=bool)
+    else:
+        subs = merge_subs(read_sub(sub_path, translate_bool=bool))
+    #merged = merge_subs(subs)
     subtitles = SubtitlesClip(subs, generator)
     video = VideoFileClip(video_path)
-    result = CompositeVideoClip([video, subtitles.set_pos(('center','bottom'))])
+    result = CompositeVideoClip([video, subtitles.set_pos(('center','top'))])
     result.write_videofile(dest + "output.mp4", fps=video.fps, temp_audiofile="temp-audio.m4a", remove_temp=True, codec="libx264", audio_codec="aac")
 
-path = "/Users/bx/Documents/GitHub/coding_project/videos/vid1.mp4"
+path = "/Users/bx/Documents/GitHub/coding_project/vid3.mp4"
 dest = "/Users/bx/Documents/GitHub/coding_project/videos/"
-sub_path = "/Users/bx/Documents/GitHub/coding_project/vid1.txt"
-#generate_subtitles(path, dest, sub_path)
+sub_path = "/Users/bx/Documents/GitHub/coding_project/vid3.txt"
+#bool true的话不会merge subtitle，false是会merge，翻译更长的句子
+generate_subtitles(path, dest, sub_path, bool=True)
 
 
 
