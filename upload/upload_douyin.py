@@ -101,7 +101,7 @@ def upload_douyin(cookie_path, driver, url, video_path, cover_path, title, vid_t
 
 options = uc.ChromeOptions()
 driver = uc.Chrome(use_subprocess=True)
-video_path = '/Users/bx/Documents/GitHub/coding_project/videos/vid1.mp4'
+video_path = '/Users/bx/Documents/GitHub/coding_project/videos/vid3.mp4'
 cover_path = '/Users/bx/Documents/GitHub/coding_project/videos_storage/pic1.jpg'
 
 chrome_options = webdriver.ChromeOptions()
