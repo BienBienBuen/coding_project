@@ -42,5 +42,7 @@ def download_video(ytid, path, format):
 print(ord("｜"))
 print(ord(unidecode("｜")))
 print(ord("|"))
+z3m7R6Ld6v8
+wrMvtIrvdrA
 """
-download_video("wrMvtIrvdrA",'/Users/bx/Documents/GitHub/coding_project/',"mp4")
+download_video("YLXHARATi-8",'/Users/bx/Documents/GitHub/coding_project/',"mp4")
