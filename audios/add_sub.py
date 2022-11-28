@@ -146,6 +146,8 @@ def generate_subtitles(video_path, dest, sub_path, bool):
 
     generator = lambda txt: TextClip(txt, font="Songti-SC-Black", fontsize=40, 
                                     color='black', bg_color = 'yellow', align='south')
+    generator_en = lambda txt: TextClip(txt, font="Apple-SD-Gothic-NeoI-SemiBold", fontsize=32, 
+                                    color='black', bg_color = 'yellow', align='south')                   
     """
     subs = [((0, 4), 'subs1'),
             ((4, 9), 'subs2'),
@@ -155,17 +157,21 @@ def generate_subtitles(video_path, dest, sub_path, bool):
     #sub 的 format 可以是直接一个list，timestamp和subtitle都在list里
     if bool == True:
         subs = read_sub(sub_path, translate_bool=bool)
+        subs_en = read_sub(sub_path, translate_bool=False)
     else:
         subs = merge_subs(read_sub(sub_path, translate_bool=bool))
     #merged = merge_subs(subs)
     subtitles = SubtitlesClip(subs, generator)
+    subtitles_en = SubtitlesClip(subs_en, generator_en)
     video = VideoFileClip(video_path)
-    result = CompositeVideoClip([video, subtitles.set_pos(('center','top'))])
+
+    result = CompositeVideoClip([video, subtitles.set_pos(('center', 0.93), relative=True), 
+                                        subtitles_en.set_position(('center', 0.87), relative=True)])
     result.write_videofile(dest + "output.mp4", fps=video.fps, temp_audiofile="temp-audio.m4a", remove_temp=True, codec="libx264", audio_codec="aac")
 
-path = "/Users/bx/Documents/GitHub/coding_project/vid3.mp4"
+path = "/Users/bx/Documents/GitHub/coding_project/vid5.mp4"
 dest = "/Users/bx/Documents/GitHub/coding_project/videos/"
-sub_path = "/Users/bx/Documents/GitHub/coding_project/vid3.txt"
+sub_path = "/Users/bx/Documents/GitHub/coding_project/vid5.txt"
 #bool true的话不会merge subtitle，false是会merge，翻译更长的句子
 generate_subtitles(path, dest, sub_path, bool=True)
 
