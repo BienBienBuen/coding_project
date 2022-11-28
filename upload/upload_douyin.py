@@ -35,7 +35,12 @@ def upload_douyin(cookie_path, driver, url, video_path, cover_path, title, vid_t
     except:
         print('didnt work')
     
-    driver.find_element(By.XPATH,'//*[text()="发布视频"]').click()
+    try: driver.find_element(By.XPATH,'//*[text()="发布视频"]').click()
+    except:
+        driver.find_element(By.XPATH, '//*[@id="dialog-0"]/div/div/button/span').click()
+        driver.find_element(By.XPATH,'//*[@id="root"]/div[2]/div/div/div/div/div/div/button/span').click()
+        driver.find_element(By.XPATH,'//*[@id="root"]/div[2]/div/div/div/div/div/div/button/span').click()
+        driver.find_element(By.XPATH,'//*[text()="发布视频"]').click()
     time.sleep(5)
     
     try:
@@ -44,13 +49,23 @@ def upload_douyin(cookie_path, driver, url, video_path, cover_path, title, vid_t
     except:
         print('didnt work')
     
-    time.sleep(5)
     driver.find_element(By.XPATH,'//input[@type="file"]').send_keys(video_path)
-    
+    for i in cookies: driver.add_cookie(i)
+    time.sleep(5)
+    """
+    action = ActionChains(driver)
+    action.key_down("\u2325").perform()
+    action.key_down(Keys.COMMAND).perform()
+    action.send_keys('i').perform()
+    action.key_up("\u2325").perform()
+    action.key_up(Keys.COMMAND).perform()
+    """
     # 等待视频上传完成
     while True:
         time.sleep(3)
         try:
+            try:driver.find_element(By.XPATH, '//*[@id="dialog-1"]/div/div/div/div[3]').click()
+            except:pass
             driver.find_element(By.XPATH,'//*[text()="重新上传"]')
             break
         except Exception as e:
@@ -101,9 +116,10 @@ def upload_douyin(cookie_path, driver, url, video_path, cover_path, title, vid_t
 
 options = uc.ChromeOptions()
 driver = uc.Chrome(use_subprocess=True)
-video_path = '/Users/bx/Documents/GitHub/coding_project/videos/vid3.mp4'
-cover_path = '/Users/bx/Documents/GitHub/coding_project/videos_storage/pic1.jpg'
-
+video_path1 = '/Users/bx/Documents/GitHub/coding_project/videos/vid3.mp4'
+cover_path1 = '/Users/bx/Documents/GitHub/coding_project/videos_storage/pic1.jpg'
+video_path2 = '/Users/Tiger/Desktop/GitHub/coding_project/videos/vid3.mp4'
+cover_path2 = '/Users/Tiger/Desktop/GitHub/coding_project/videos_storage/pic1.jpg'
 chrome_options = webdriver.ChromeOptions()
 prefs = {'download.default_directory' : '/Users/Tiger/Desktop/GitHub/coding_project/videos_storage'}
 chrome_options.add_experimental_option('prefs', prefs)
@@ -112,8 +128,8 @@ description = 'i love you babyyyy'
 title = 'haha'
 tags = 'wow'
 vid_type = ('体育', '球类项目')
-upload_douyin('/Users/bx/Documents/GitHub/coding_project/cookies/cookies - ben.csv', 
-driver, 'https://creator.douyin.com/creator-micro/content/upload', video_path, cover_path,  title, vid_type,tags)
+upload_douyin('/Users/Tiger/Desktop/GitHub/coding_project/.csv', 
+driver, 'https://creator.douyin.com/creator-micro/content/upload', video_path2, cover_path2,  title, vid_type,tags)
 
 def text_to_audio(cookie_path, driver, url, text):
     # 登录
