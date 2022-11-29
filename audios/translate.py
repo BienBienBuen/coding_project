@@ -163,9 +163,9 @@ LANGUAGES = {
     'yo': 'yoruba',
     'zu': 'zulu',
 }
-def translate(original_text):
+def translate(original_text, language):
     translator = Translator()
-    translation = translator.translate(original_text, src = 'en', dest= 'zh-cn')
+    translation = translator.translate(original_text, src = language, dest= 'zh-cn')
     return translation.text
     
 def audio_to_txt():

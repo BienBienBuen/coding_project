@@ -4,9 +4,6 @@ import re
 import json
 
 # link: https://stackoverflow.com/questions/53659427/python-retrieve-automatic-captions-with-youtube-dl-and-transform-to-transcript
-path_1 = '/Users/bx/Documents/GitHub/coding_project/audios_storage/'
-path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/audios_storage/'
-
 def get_sub(video_id, video_name, path):
     url = 'youtube.com/watch?v=' + video_id
     ydl = yt_dlp.YoutubeDL({'writesubtitles': True, 'allsubtitles': True, 'writeautomaticsub': True})
@@ -32,5 +29,7 @@ def get_sub(video_id, video_name, path):
    
 
 if __name__ == '__main__':
+    path_1 = '/Users/bx/Documents/GitHub/coding_project/audios_storage/'
+    path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/audios_storage/'
     # get_sub("CDxHbfFDvxo", 'testfile2', path_2) 
-    get_sub("YLXHARATi-8", 'vid5', path_1)
+    get_sub("qvX3DJj0rkA", 'vid7', path_1)

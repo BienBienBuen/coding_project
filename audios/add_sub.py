@@ -89,7 +89,7 @@ from moviepy.editor import *
 from moviepy.video.tools.subtitles import SubtitlesClip
 from moviepy.config import change_settings
 # change_settings({"IMAGEMAGICK_BINARY": "/usr/local/Cellar/imagemagick/6.9.6-2/bin/convert"})
-def read_sub(sub_path, translate_bool):
+def read_sub(sub_path, translate_bool, language):
     with open(sub_path) as f:
         lines = []
         temp_list = []
@@ -107,7 +107,7 @@ def read_sub(sub_path, translate_bool):
             subtitle = "".join(subtitle_list)
 
             if translate_bool == True:
-                final_tuple = (time_tuple, translate.translate(subtitle)) 
+                final_tuple = (time_tuple, translate.translate(subtitle, language)) 
             else:
                 final_tuple = (time_tuple, subtitle)
             subs.append(final_tuple)
@@ -142,7 +142,7 @@ def merge_subs(sub):
 
 # sub = read_sub("/Users/bx/Documents/GitHub/coding_project/vid3.txt", translate_bool=True)
 
-def generate_subtitles(video_path, dest, sub_path, bool):
+def generate_subtitles(video_path, dest, sub_path, bool, language):
 
     generator = lambda txt: TextClip(txt, font="Songti-SC-Black", fontsize=40, 
                                     color='black', bg_color = 'yellow', align='south')
@@ -156,24 +156,26 @@ def generate_subtitles(video_path, dest, sub_path, bool):
     """
     #sub 的 format 可以是直接一个list，timestamp和subtitle都在list里
     if bool == True:
-        subs = read_sub(sub_path, translate_bool=bool)
-        subs_en = read_sub(sub_path, translate_bool=False)
+        subs = read_sub(sub_path, translate_bool=bool, language=language)
+        subs_og = read_sub(sub_path, translate_bool=False, language=language)
     else:
-        subs = merge_subs(read_sub(sub_path, translate_bool=bool))
+        subs = merge_subs(read_sub(sub_path, translate_bool=bool, language=language))
     #merged = merge_subs(subs)
     subtitles = SubtitlesClip(subs, generator)
-    subtitles_en = SubtitlesClip(subs_en, generator_en)
+    subtitles_og = SubtitlesClip(subs_og, generator_en)
     video = VideoFileClip(video_path)
 
     result = CompositeVideoClip([video, subtitles.set_pos(('center', 0.93), relative=True), 
-                                        subtitles_en.set_position(('center', 0.87), relative=True)])
+                                        subtitles_og.set_position(('center', 0.87), relative=True)])
     result.write_videofile(dest + "output.mp4", fps=video.fps, temp_audiofile="temp-audio.m4a", remove_temp=True, codec="libx264", audio_codec="aac")
 
-path = "/Users/bx/Documents/GitHub/coding_project/vid5.mp4"
-dest = "/Users/bx/Documents/GitHub/coding_project/videos/"
-sub_path = "/Users/bx/Documents/GitHub/coding_project/vid5.txt"
-#bool true的话不会merge subtitle，false是会merge，翻译更长的句子
-generate_subtitles(path, dest, sub_path, bool=True)
+
+if __name__ == '__main__':
+    path = "/Users/bx/Documents/GitHub/coding_project/vid7.mp4"
+    dest = "/Users/bx/Documents/GitHub/coding_project/videos/"
+    sub_path = "/Users/bx/Documents/GitHub/coding_project/vid7.txt"
+    #bool true的话不会merge subtitle，false是会merge，翻译更长的句子
+    generate_subtitles(path, dest, sub_path, bool=True, language='en')
 
 
 

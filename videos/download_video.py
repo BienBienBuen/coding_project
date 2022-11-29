@@ -9,7 +9,7 @@ from csv import DictReader
 
 def download_youtube_video(ytid, path, format):
     #check number of files in directory
-    number_count = len([name for name in os.listdir(path) if os.path.isfile(os.path.join(path, name))])
+    #number_count = len([name for name in os.listdir(path) if os.path.isfile(os.path.join(path, name))])
     ytdl_format_options = {
         'outtmpl': os.path.join(path, '%(title)s.%(ext)s'),
         'format': format
@@ -37,7 +37,7 @@ def download_youtube_video(ytid, path, format):
 
         return True
 
-download_youtube_video('96Ek4cVdHlI', './coding_project/videos_storage/', 'mp4')
+download_youtube_video('qvX3DJj0rkA', './coding_project/videos_storage/', 'mp4')
 # pip install PyTikTokAPI
 
 def tiktok_api(cookie_path):
