@@ -24,7 +24,8 @@ time_limit = 300
 
 def sports_highlight(path):
     from videos import download_video, get_video_info, divide_video, detect_background_change, search_video
-    
+    from audios import get_sub, add_sub
+    from upload import upload_douyin
     # download newest vid into video folder
     video_id = search_video.get_newest_video(channel_id, api)
     #sub = translate.get_subtitle(video_id, path_1)
@@ -37,11 +38,17 @@ def sports_highlight(path):
     print(title_chi)
     
     # need the name of the video fronm download_video func
-    #number_count = len([name for name in os.listdir(path) if os.path.isfile(os.path.join(path, name))])
-    #vid_name = 'vid' + str(number_count-1) + '.mp4'
-    
+    number_count = len([name for name in os.listdir(path) if os.path.isfile(os.path.join(path, name))])
+    vid_name = 'vid' + str(number_count-1) + '.mp4'
+    """
     scene_list = detect_background_change.split_video_into_scenes(os.path.join(path, vid_name), threshold=75)
     time_stamps = detect_background_change.standardize_scene_list(scene_list)
+    """
+    #get subtitle from video
+    get_sub.get_sub(video_id=video_id, video_name=vid_name, path = path+"audios_storage/")
+    #add subtitles
+    add_sub.generate_subtitles(video_path=path+"videos_storage", dest=path,sub_path=path+"audios_storage"+str(number_count-1)+".txt")
+    #unload_douyin.upload_douyin()
     """
     divide_video.generate_final_clips(vid_name, time_stamps, time_limit, path)
     """
