@@ -113,6 +113,14 @@ def upload_douyin(cookie_path, driver, url, video_path, cover_path, title, vid_t
     driver.find_element(By.XPATH,'//*[@id="root"]/div/div/div[2]/div[1]/div[14]/button[1]').click()
 
     time.sleep(999)
+def login_douyin(cookie_path, driver, url, video_path, cover_path, title, vid_type, tags):
+    # 登录抖音
+    cookies = get_cookies_values(cookie_path)
+    driver.get(url)
+    for i in cookies: driver.add_cookie(i)
+    driver.refresh()
+    print(1)
+    time.sleep(7000000)
 
 options = uc.ChromeOptions()
 driver = uc.Chrome(use_subprocess=True)
@@ -128,8 +136,12 @@ description = 'i love you babyyyy'
 title = 'haha'
 tags = 'wow'
 vid_type = ('体育', '球类项目')
-upload_douyin('/Users/Tiger/Desktop/GitHub/coding_project/.csv', 
+login_douyin('/Users/Tiger/Desktop/GitHub/coding_project/cookies/抖音_动漫.csv', 
 driver, 'https://creator.douyin.com/creator-micro/content/upload', video_path2, cover_path2,  title, vid_type,tags)
+
+
+#upload_douyin('/Users/Tiger/Desktop/GitHub/coding_project/cookies/抖音_励志.csv', 
+#driver, 'https://creator.douyin.com/creator-micro/content/upload', video_path2, cover_path2,  title, vid_type,tags)
 
 def text_to_audio(cookie_path, driver, url, text):
     # 登录

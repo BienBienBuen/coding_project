@@ -173,47 +173,11 @@ path = "/Users/bx/Documents/GitHub/coding_project/vid5.mp4"
 dest = "/Users/bx/Documents/GitHub/coding_project/videos/"
 sub_path = "/Users/bx/Documents/GitHub/coding_project/vid5.txt"
 #bool true的话不会merge subtitle，false是会merge，翻译更长的句子
+
+vid_path ='./coding_project/videos_storage/去你的.mp4'
+dest = './coding_project/videos_storage/'
+sub_path = './coding_project/vid.txt'
 generate_subtitles(path, dest, sub_path, bool=True)
 
 
-
-"""
-def add_subtitle(video_path, subtitle, start_time, end_time):
-    video = VideoFileClip(video_path) 
-    video = video.volumex(0.8) 
-    video = video.subclip(0,10)
-    subtitle = TextClip(subtitle, fontsize = 75, color = 'yellow') 
-    subtitle = subtitle.set_start(start_time).set_end(end_time).set_pos('center').set_duration(10) 
-    video = CompositeVideoClip([video, subtitle]) 
-                
-    video.ipython_display(width = 280) 
-
-    destination = os.path.join(dir_path, f'{name}_{sub_clip_count}.mp4')
-    final_video_clip.write_videofile(destination, fps=30, threads=4, codec="libx264")
-    final_video_clip.close()
-    """
-# add_subtitle('/Users/Tiger/Desktop/GitHub/coding_project/videos_storage/1.mp4', 'i love u', 0, 5)
-
-
-
-time_stamp = ()
-test = [['00:00:01.780', ' 00:00:04.630', ' How much time do you really waste?'], 
-['00:00:04.630', ' 00:00:06.410', ' For real?'], 
-['00:00:06.410', ' 00:00:08.910', ' How much time do you have left?']]
-def match_sub(time_stamp, list, diff_allowed):
-    start, end = time_stamp[0], time_stamp[1]
-    start_min, start_max = convert_time1(start - diff_allowed, ''), convert_time1(start + diff_allowed, '')
-    end_min, end_max = convert_time1(end - diff_allowed, ''), convert_time1(end + diff_allowed, '')
-
-    for start_index in range(len(list)):
-        if start_min <= list[start_index][0] <= start_max:
-            end_index = start_index
-            while end_index < len(list):
-                if end_min <= list[end_index][1] <= end_max: break
-                end_index += 1
-    return (start_index, end_index)
-
-
-#test
-#print(get_video_length('00:03:48.370'))
 

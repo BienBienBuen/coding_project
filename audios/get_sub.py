@@ -17,11 +17,11 @@ def get_sub(video_id, video_name, path):
         print('Grabbing vtt file from ' + res['requested_subtitles']['en']['url'])
         response = requests.get(res['requested_subtitles']['en']['url'], stream=True)
         f1 = open(path + video_name+'.txt', "w")
-        """
+        
         new = re.sub(r'\d{2}\W\d{2}\W\d{2}\W\d{3}\s\W{3}\s\d{2}\W\d{2}\W\d{2}\W\d{3}\ align:start position:0%',repl = '',string = response.text)
         new = re.sub(r'.*</c>',repl = '',string = new)
-        """
-        f1.write(response.text)
+        
+        f1.write(new)
         f1.close()
         if len(res['subtitles']) > 0:
             print('manual captions')
@@ -33,4 +33,4 @@ def get_sub(video_id, video_name, path):
 
 if __name__ == '__main__':
     # get_sub("CDxHbfFDvxo", 'testfile2', path_2) 
-    get_sub("YLXHARATi-8", 'vid5', path_1)
+    get_sub("GdZCDjvm8DM", 'vid', path_2)

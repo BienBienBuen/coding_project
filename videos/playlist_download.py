@@ -87,6 +87,7 @@ def main(url):
     for link in our_links:
         try:
             yt = YouTube(link)
+           
             main_title = yt.title
             main_title = main_title + '.mp4'
             main_title = main_title.replace('|', '')
@@ -94,20 +95,24 @@ def main(url):
         except:
             print('connection problem..unable to fetch video info')
             break
-
+       
         if main_title not in x:
             if True:
-                vid = yt.streams.filter(progressive=True, file_extension='mp4', res='720p').first()
-                print('Downloading. . . ' + vid.default_filename + ' and its file size -> ' + str(round(vid.filesize / (1024 * 1024), 2)) + ' MB.')
-                vid.download(SAVEPATH)
-                print('Video Downloaded')
+                
+                    vid = yt.streams.filter(progressive=True, file_extension='mp4', custom_filter_functions=[lambda s: (s.resolution == '1080p') or (s.resolution == '720p')]).first()
+                        
+                    print('Downloading. . . ' + vid.default_filename + ' and its file size -> ' + str(round(vid.filesize / (1024 * 1024), 2)) + ' MB.')
+                
+                    vid.download(SAVEPATH)
+                    print('Video Downloaded')
+                
             else:
                 print('something is wrong.. please rerun the script')
         else:
             print(f'\n skipping "{main_title}" video \n')
 
-
     print(' downloading finished')
     print(f'\n all your videos are saved at --> {SAVEPATH}')
+    return new_folder_name[:7]
 
-main('https://www.youtube.com/playlist?list=PL4kSvT71A-TjKg9L5bbVIPOfjgX9qyNWD')
+print(main('https://www.youtube.com/watch?v=kcll-H4vCss&list=PL-8a09SW3wDTLiQDt2BPBP8EyN3Eug8bw'))

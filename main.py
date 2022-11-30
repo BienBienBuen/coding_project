@@ -47,7 +47,6 @@ def sports_highlight(path):
     """
 sports_highlight(path_2)
 
-
 def motivational_speech(path):
     from audios import add_sub, get_sub, translate, txt_to_list
     from videos import download_video, search_video, get_video_info
