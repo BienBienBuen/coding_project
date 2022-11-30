@@ -36,8 +36,8 @@ def download_youtube_video(ytid, path, format):
         #     pass
 
         return True
-
-#download_youtube_video('5ggNjBIs3h0', './coding_project/videos_storage/', 'mp4')
+if __name__ == "__main__":
+    download_youtube_video('FKSKIfapQns', './videos_storage/', 'mp4')
 # pip install PyTikTokAPI
 
 def tiktok_api(cookie_path):
@@ -99,6 +99,7 @@ def add_images(input_path, image_path):
 path = './coding_project/videos_storage/'
 vid_name = 'dance'
 link = 'https://www.youtube.com/watch?v=5ggNjBIs3h0'
+
 from pytube import YouTube
 yt = YouTube(link)
 vid = yt.streams.filter(progressive=True, file_extension='mp4', custom_filter_functions=[lambda s: (s.resolution == '1080p') or (s.resolution == '720p')]).first()
