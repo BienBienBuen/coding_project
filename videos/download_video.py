@@ -102,12 +102,13 @@ def download_image(image_url, output_path, name):
     img_data = requests.get(image_url).content
     with open(output_path + name, 'wb') as handler:
         handler.write(img_data)
-        print('success')
+       
 
-
+"""
 
 path = '/Users/Tiger/Desktop/videos_storage/'
 folder_name = 'anime'
 link = 'https://i.ytimg.com/vi/10ZLarl9DLo/maxresdefault.jpg'
 
 download_image(link, path, 'h.png')
+"""

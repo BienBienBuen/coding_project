@@ -10,7 +10,7 @@ def get_useful_info(video_id, api):
         'tags': video_info['snippet']['tags'],
         'categoryId': video_info['snippet']['categoryId'],
         'contentDetails': video_info['contentDetails'],
-        'stattistics': video_info['statistics'],
+        'statistics': video_info['statistics']['viewCount'],
         'thumbnail_max': check_thumbnail_quality(video_info),
         'publishedAt': video_info['snippet']['publishedAt']
     }
@@ -44,7 +44,7 @@ def get_video_length(video_id, api):
     
     return time
 
-
+"""
 from pyyoutube import Api
 api_key = "AIzaSyAK-BlzaRCnoDG6L0RbHp0spMT1htOEsV8" #这是我youtube的key
 api = Api(api_key=api_key)
@@ -52,5 +52,5 @@ api = Api(api_key=api_key)
 
 
 print((get_useful_info('KISOO-VD8vY', api)))
-
+"""
 

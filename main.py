@@ -13,15 +13,12 @@ api = Api(api_key=api_key)
 basketball_channels = ['GoldenHoops', 'TristanJass', 'JoshWalker5', 'Hoopaholics', 'OTEATL', 'ClutchPoints', 'OmarESPN', 
 'GDsHighlights', 'fingeroll_', 'braxtonpicou', 'TJCyt1', 'kingjetzz', 'SnapBackSports', 'Houseofhighlights', 'Thesosorondo',
 'DDSquadstunts', 'BallerClipz', 'ypkraye']
-basketball_channels = ['TJCyt1']
-
 
 anime_channels = ['AniMemes08', 'UzumakiMadara', 'animixed106', 'animeshorts2910', 'animeshorts3852', 'viisual_ice8016', 
-'SarotsiX', 'hokage_minato_shorts', 'Pride_Sage', 'CrunchyrollCollection']
+'SarotsiX', 'hokage_minato_shorts', 'Pride_Sage', 'CrunchyrollCollection', 'upsidedownart09']
 
-def main(channel_type):
+def main(channel_type, number_of_vids):
     from videos import search_video
-    shorts_count = 0
 
     with open(f'{channel_type}.csv', 'w') as f:
         f.truncate()
@@ -39,63 +36,70 @@ def main(channel_type):
     elif channel_type == 'anime': channels = anime_channels
     else: pass
 
+    shorts_collection = []
     for channel in channels:
-        shorts_count = get_youtube_shorts(channel, api, shorts_count, channel_type)
+        get_youtube_shorts(channel, api, shorts_collection)
+        print('getting videos...')
+    print(shorts_collection)
+    shorts_collection = (sorted(shorts_collection, key = lambda x : x[1], reverse=True))[:number_of_vids]
+
+    download_shorts(shorts_collection, channel_type, api)
 
     search_video.convert_csv_to_excel(channel_type)
 
-def get_youtube_shorts(channel_name, api, shorts_count, channel_type):
+def get_youtube_shorts(channel_name, api, shorts_collection):
     page_url = 'https://www.youtube.com/@' + channel_name + '/shorts'
     webUrl = urllib.request.urlopen(page_url)
-   
+    
     new = re.findall(r'[/][s][h][o][r][t][s][/].+?["]', str(webUrl.read()))
     shorts_ids = []
     for item in new:
         if item != '/shorts/shorts"':
             shorts_ids.append(item[:-1])
     #print(shorts_ids)
-    # get the latest video
+    
+    # add latest videos
+    for shorts_id in shorts_ids[:15]:
+        #print(shorts_id)
+        useful_info = get_video_info.get_useful_info(shorts_id[8:], api)
+        publishedAt = useful_info['publishedAt']
+        statistics = useful_info['statistics']
+        if search_video.check_update_by_time(publishedAt):
+            shorts_collection.append((shorts_id[8:], statistics, channel_name))
+            
 
-    #check with record in url_list.txt, if latest, then download
+def download_shorts(shorts_collection, channel_type, api):
     with open(f'{channel_type}.csv', 'a', newline='') as f:
         writer = csv.writer(f)
-        
-        for shorts_id in shorts_ids[:15]:
-            #print(shorts_id)
-            useful_info = get_video_info.get_useful_info(shorts_id[8:], api)
-            publishedAt = useful_info['publishedAt']
-            
-            if search_video.check_update_by_time(publishedAt):
-                
-                try:
-                    path = '/Users/Tiger/Desktop/videos_storage/'
-                    folder_name = f'{channel_type}/{str(shorts_count)}/'
-                    link = 'https://www.youtube.com' + shorts_id
-                    print(link)
-                    
-                    download_video.download_yt_vid(path, folder_name, link)
-                    print('downloaded!')
-                    
-                    title = useful_info['title']
-                    thumbnail_url = useful_info['thumbnail_max']
-                    
-                    #contentDetails = useful_info['contentDetails']
-                    tags = useful_info['tags']
-                    
-                    writer.writerow([channel_name, title, thumbnail_url, tags, 'nope'])
-                    try:
-                        download_video.download_image(thumbnail_url, path + folder_name, 'thumbnail.png')
-                    except: pass
-                    #print(shorts_count, 'hello!')
-                   
-                    shorts_count += 1
+        path = '/Users/Tiger/Desktop/videos_storage/'
 
-                except:
-                    print('shit quality! did not download!')
+        for i in range(len(shorts_collection)):
+            shorts_id, channel_name = shorts_collection[i][0], shorts_collection[i][2]
+            useful_info = get_video_info.get_useful_info(shorts_id, api)
+            
+            folder_name = f'{channel_type}/{str(i+1)}/'
+            link = 'https://www.youtube.com/shorts/' + shorts_id
+            print(link)
+            try:            
+                download_video.download_yt_vid(path, folder_name, link)
+                print('downloaded!')
+                            
+                title = useful_info['title']
+                thumbnail_url = useful_info['thumbnail_max']
+                tags = useful_info['tags']
+                            
+                writer.writerow([channel_name, title, thumbnail_url, tags, 'nope'])
+                try:
+                    download_video.download_image(thumbnail_url, path + folder_name, 'thumbnail.png')
+                except: pass
+                    #print(shorts_count, 'hello!')
+                        
+            except:
+                print('shit quality! did not download!')
     f.close()
     
     
-    return shorts_count
+    
 
 
 def remove(sheet, row):
@@ -110,7 +114,7 @@ def remove(sheet, row):
 	# and remove the row
 	sheet.delete_rows(row[0].row, 1)
 
-main('anime')
+main('anime', 35)
 def sports_highlight(path):
 
     from videos import download_video, get_video_info, divide_video, detect_background_change, search_video
