@@ -51,13 +51,10 @@ def link_snatcher(url):
             our_links.append(work_m)
     return our_links
 
-
-
-
 def main(url):
     BASE_DIR = os.getcwd()
     our_links = link_snatcher(url)
-    os.chdir('./coding_project/videos_storage/')
+    os.chdir('/Users/Tiger/Desktop/videos_storage/')
 
     new_folder_name = foldertitle(url)
     print(new_folder_name[:7])

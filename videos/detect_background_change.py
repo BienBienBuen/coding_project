@@ -72,7 +72,7 @@ def standardize_scene_list(scene_list):
     return timestamp
 
 path_1 = '/Users/bx/Documents/GitHub/coding_project/videos/Dad Slander.mp4'
-path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/videos_storage/anime/PLECYMF/Anime Edits  TikTok Compilation  Part 1 🔥.mp4'
+path_2 = '/Users/Tiger/Desktop/videos_storage/anime/PLECYMF/Anime Edits  TikTok Compilation  Part 1 🔥.mp4'
 #test
 x = split_video_into_scenes(path_2, 92)
 print(standardize_scene_list(x))

@@ -136,7 +136,7 @@ description = 'i love you babyyyy'
 title = 'haha'
 tags = 'wow'
 vid_type = ('体育', '球类项目')
-login_douyin('/Users/Tiger/Desktop/GitHub/coding_project/cookies/抖音_动漫.csv', 
+login_douyin('/Users/Tiger/Desktop/GitHub/coding_project/cookies/抖音_本哥篮球.csv', 
 driver, 'https://creator.douyin.com/creator-micro/content/upload', video_path2, cover_path2,  title, vid_type,tags)
 
 

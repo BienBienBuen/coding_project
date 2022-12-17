@@ -87,11 +87,11 @@ def simple_divide(dir_name, vid_name, start_time, time_per_clip, vid_path):
         
 
 import os
-path = './coding_project/videos_storage/anime/PLECYMF/'
+path = '/Users/Tiger/Desktop/videos_storage/anime/PLECYMF/'
 dir_list = os.listdir(path)
 
 count = 0
 dir_name = 'PLECYMF'
 for i in range(len(dir_list)):
     count+= 1
-    simple_divide(dir_name, f'vid{count}', 10, 20, f'./coding_project/videos_storage/anime/{dir_name}/{dir_list[i]}')
+    simple_divide(dir_name, f'vid{count}', 10, 20, f'/Users/Tiger/Desktop/videos_storage/{dir_name}/{dir_list[i]}')

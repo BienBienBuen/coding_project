@@ -2,9 +2,9 @@ from unicodedata import name
 from pyyoutube import Api
 import yt_dlp 
 import os
-from unidecode import unidecode
 from TikTokAPI import TikTokAPI
-from csv import DictReader
+import requests
+
 #from main import get_newest_video
 
 def download_youtube_video(ytid, path, format):
@@ -39,7 +39,6 @@ def download_youtube_video(ytid, path, format):
 
 #download_youtube_video('5ggNjBIs3h0', './coding_project/videos_storage/', 'mp4')
 # pip install PyTikTokAPI
-
 def tiktok_api(cookie_path):
     dict = {}
     with open(cookie_path, 'r') as fin:
@@ -47,7 +46,6 @@ def tiktok_api(cookie_path):
         dict[key] = value
     api = TikTokAPI(cookie=dict)
     return api
-    
 def download_tiktok_video(api, number, output_path):
     retval = api.getTrending(count=number)
     video_list = []
@@ -60,10 +58,6 @@ def download_tiktok_video(api, number, output_path):
     for n in number:
         api.downloadVideoById(video_id=video_list[n][0], save_path= output_path + str(video_list[n][0]) + '.mp4', )
     """
-
-#api = TikTokAPI()
-#download_tiktok_video(api, 5, './coding_project/videos_storage/')
-
 def download_tiktok_video_by_ID(api, video_id):
     s = api.getVideoById(video_id='7109188785673473323')
 
@@ -73,6 +67,8 @@ def download_tiktok_video_by_ID(api, video_id):
     api.downloadVideoById(video_id=id, save_path= './coding_project/videos_storage/14.mp4' )
     import urllib.request
     urllib.request.urlretrieve(thumb_url, f'./coding_project/videos_storage/{id}.jpg')
+#api = TikTokAPI()
+#download_tiktok_video(api, 5, './coding_project/videos_storage/')
 
 import moviepy.editor as mp
 from PIL import Image
@@ -94,12 +90,24 @@ def add_images(input_path, image_path):
 
     final = mp.CompositeVideoClip([video, logo1, logo2])
     final.write_videofile("edited.mp4")
-
 #add_images('./coding_project/videos_storage/14.mp4', './coding_project/videos_storage/heart.jpg')
-path = './coding_project/videos_storage/'
-vid_name = 'dance'
-link = 'https://www.youtube.com/watch?v=5ggNjBIs3h0'
-from pytube import YouTube
-yt = YouTube(link)
-vid = yt.streams.filter(progressive=True, file_extension='mp4', custom_filter_functions=[lambda s: (s.resolution == '1080p') or (s.resolution == '720p')]).first()
-vid.download(path+ vid_name)
+
+def download_yt_vid(path, folder_name, link):
+    from pytube import YouTube
+    yt = YouTube(link)
+    vid = yt.streams.filter(progressive=True, file_extension='mp4', custom_filter_functions=[lambda s: (s.resolution == '1080p') or (s.resolution == '720p') or (s.resolution == '480p')]).first()
+    vid.download(path + folder_name)
+
+def download_image(image_url, output_path, name):
+    img_data = requests.get(image_url).content
+    with open(output_path + name, 'wb') as handler:
+        handler.write(img_data)
+        print('success')
+
+
+
+path = '/Users/Tiger/Desktop/videos_storage/'
+folder_name = 'anime'
+link = 'https://i.ytimg.com/vi/10ZLarl9DLo/maxresdefault.jpg'
+
+download_image(link, path, 'h.png')
