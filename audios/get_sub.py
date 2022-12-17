@@ -33,4 +33,4 @@ def get_sub(video_id, video_name, path):
 
 if __name__ == '__main__':
     # get_sub("CDxHbfFDvxo", 'testfile2', path_2) 
-    get_sub("GdZCDjvm8DM", 'vid', path_2)
+    get_sub("qvX3DJj0rkA", 'vid7', path_1)

@@ -89,7 +89,7 @@ from moviepy.editor import *
 from moviepy.video.tools.subtitles import SubtitlesClip
 from moviepy.config import change_settings
 # change_settings({"IMAGEMAGICK_BINARY": "/usr/local/Cellar/imagemagick/6.9.6-2/bin/convert"})
-def read_sub(sub_path, translate_bool):
+def read_sub(sub_path, translate_bool, language):
     with open(sub_path) as f:
         lines = []
         temp_list = []
@@ -107,7 +107,7 @@ def read_sub(sub_path, translate_bool):
             subtitle = "".join(subtitle_list)
 
             if translate_bool == True:
-                final_tuple = (time_tuple, translate.translate(subtitle)) 
+                final_tuple = (time_tuple, translate.translate(subtitle, language=language)) 
             else:
                 final_tuple = (time_tuple, subtitle)
             subs.append(final_tuple)
@@ -142,7 +142,7 @@ def merge_subs(sub):
 
 # sub = read_sub("/Users/bx/Documents/GitHub/coding_project/vid3.txt", translate_bool=True)
 
-def generate_subtitles(video_path, dest, sub_path, bool):
+def generate_subtitles(video_path, dest, sub_path, bool, language):
 
     generator = lambda txt: TextClip(txt, font="Songti-SC-Black", fontsize=40, 
                                     color='black', bg_color = 'yellow', align='south')
@@ -156,28 +156,45 @@ def generate_subtitles(video_path, dest, sub_path, bool):
     """
     #sub 的 format 可以是直接一个list，timestamp和subtitle都在list里
     if bool == True:
-        subs = read_sub(sub_path, translate_bool=bool)
-        subs_en = read_sub(sub_path, translate_bool=False)
+        subs = read_sub(sub_path, translate_bool=bool, language=language)
+        subs_og = read_sub(sub_path, translate_bool=False, language=language)
     else:
-        subs = merge_subs(read_sub(sub_path, translate_bool=bool))
+        subs = merge_subs(read_sub(sub_path, translate_bool=bool, language=language))
     #merged = merge_subs(subs)
     subtitles = SubtitlesClip(subs, generator)
-    subtitles_en = SubtitlesClip(subs_en, generator_en)
+    subtitles_og = SubtitlesClip(subs_og, generator_en)
     video = VideoFileClip(video_path)
 
     result = CompositeVideoClip([video, subtitles.set_pos(('center', 0.93), relative=True), 
-                                        subtitles_en.set_position(('center', 0.87), relative=True)])
-    result.write_videofile(dest + "output.mp4", fps=video.fps, temp_audiofile="temp-audio.m4a", remove_temp=True, codec="libx264", audio_codec="aac")
+                                        subtitles_og.set_position(('center', 0.87), relative=True)])
+    result.write_videofile(dest + "output.mp4", fps=video.fps, 
+            temp_audiofile="temp-audio.m4a", remove_temp=True, codec="libx264", audio_codec="aac")
 
-path = "/Users/bx/Documents/GitHub/coding_project/vid5.mp4"
-dest = "/Users/bx/Documents/GitHub/coding_project/videos/"
-sub_path = "/Users/bx/Documents/GitHub/coding_project/vid5.txt"
-#bool true的话不会merge subtitle，false是会merge，翻译更长的句子
 
-vid_path ='./coding_project/videos_storage/去你的.mp4'
-dest = './coding_project/videos_storage/'
-sub_path = './coding_project/vid.txt'
-generate_subtitles(path, dest, sub_path, bool=True)
+if __name__ == '__main__':
+    path = "/Users/bx/Documents/GitHub/coding_project/vid7.mp4"
+    dest = "/Users/bx/Documents/GitHub/coding_project/videos/"
+    sub_path = "/Users/bx/Documents/GitHub/coding_project/vid7.txt"
+    #bool true的话不会merge subtitle，false是会merge，翻译更长的句子
+    generate_subtitles(path, dest, sub_path, bool=True, language='en')
 
+
+
+"""
+def add_subtitle(video_path, subtitle, start_time, end_time):
+    video = VideoFileClip(video_path) 
+    video = video.volumex(0.8) 
+    video = video.subclip(0,10)
+    subtitle = TextClip(subtitle, fontsize = 75, color = 'yellow') 
+    subtitle = subtitle.set_start(start_time).set_end(end_time).set_pos('center').set_duration(10) 
+    video = CompositeVideoClip([video, subtitle]) 
+                
+    video.ipython_display(width = 280) 
+
+    destination = os.path.join(dir_path, f'{name}_{sub_clip_count}.mp4')
+    final_video_clip.write_videofile(destination, fps=30, threads=4, codec="libx264")
+    final_video_clip.close()
+    """
+# add_subtitle('/Users/Tiger/Desktop/GitHub/coding_project/videos_storage/1.mp4', 'i love u', 0, 5)
 
 
