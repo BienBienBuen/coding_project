@@ -316,4 +316,4 @@ def detect(filename, ocr_type):
     else:
         print("FILE NOT FOUND: BYE")
         
-detect('vid6.mp4','LINES')
+detect('vid7.mp4','LINES')
