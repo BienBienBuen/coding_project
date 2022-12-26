@@ -37,7 +37,7 @@ def download_youtube_video(ytid, path, format):
 
         return True
 if __name__ == "__main__":
-    download_youtube_video('FKSKIfapQns', './', 'mp4')
+    download_youtube_video('AjGQxrit5Pw', './', 'mp4')
 # pip install PyTikTokAPI
 
 #download_youtube_video('5ggNjBIs3h0', './coding_project/videos_storage/', 'mp4')

@@ -16,7 +16,12 @@ basketball_channels = ['GoldenHoops', 'TristanJass', 'JoshWalker5', 'Hoopaholics
 
 anime_channels = ['AniMemes08', 'UzumakiMadara', 'animixed106', 'animeshorts2910', 'animeshorts3852', 'viisual_ice8016', 
 'SarotsiX', 'hokage_minato_shorts', 'Pride_Sage', 'CrunchyrollCollection', 'upsidedownart09']
-
+#'NotSafe'
+game_channels = ['Daaninator', 'BaileysDad', 'TeamKSA', 'Crusher_21', '1st', 'DeekoShorts', 'GEVids', 'spy.animes',
+    'MooseShorts', 'camman18', 'TwiShorts', 'BRAWLMAKER', 'minecraftnutiy', 'fvdge', 'janerijk4046','hellfrozen9971',
+    'theWizCR', 'ClashRoyaleTeam', 'royleplus2546']
+#'bobdealanl'
+music_channels = ['maxgrabel', 'muzicclout', 'JarredJermaine', 'ArcNorthDaily', 'LandenPurifoy']
 def main(channel_type, number_of_vids):
     from videos import search_video
 
@@ -25,8 +30,8 @@ def main(channel_type, number_of_vids):
         writer = csv.writer(f)
         writer.writerow(['channel_name', 'title', 'thumbnail_url', 'tags', 'done?'])
         f.close()
-
-    excel_path = f'/Users/Tiger/Desktop/videos_storage/{channel_type}.xlsx'
+    excel_path = f'/Users/bx/Desktop/videos_storage/{channel_type}.xlsx'
+    #excel_path = f'/Users/Tiger/Desktop/videos_storage/{channel_type}.xlsx'
     book = openpyxl.load_workbook(excel_path)
     sheet = book['Sheet1']
     for row in sheet: remove(sheet,row)
@@ -34,11 +39,14 @@ def main(channel_type, number_of_vids):
 
     if channel_type == 'basketball': channels = basketball_channels
     elif channel_type == 'anime': channels = anime_channels
+    elif channel_type == 'game': channels = game_channels
+    elif channel_type == 'music': channels = music_channels
     else: pass
 
     shorts_collection = []
     for channel in channels:
         get_youtube_shorts(channel, api, shorts_collection)
+        print(channel)
         print('getting videos...')
     print(shorts_collection)
     shorts_collection = (sorted(shorts_collection, key = lambda x : x[1], reverse=True))[:number_of_vids]
@@ -64,15 +72,17 @@ def get_youtube_shorts(channel_name, api, shorts_collection):
         useful_info = get_video_info.get_useful_info(shorts_id[8:], api)
         publishedAt = useful_info['publishedAt']
         statistics = useful_info['statistics']
-        if search_video.check_update_by_time(publishedAt):
+        #can comment out to find historic best vid
+        if True: #search_video.check_update_by_time(publishedAt):
             shorts_collection.append((shorts_id[8:], statistics, channel_name))
             
 
 def download_shorts(shorts_collection, channel_type, api):
     with open(f'{channel_type}.csv', 'a', newline='') as f:
         writer = csv.writer(f)
-        path = '/Users/Tiger/Desktop/videos_storage/'
-
+        path = '/Users/bx/Desktop/videos_storage/'
+        # path = '/Users/Tiger/Desktop/videos_storage/'
+        
         for i in range(len(shorts_collection)):
             shorts_id, channel_name = shorts_collection[i][0], shorts_collection[i][2]
             useful_info = get_video_info.get_useful_info(shorts_id, api)
@@ -99,9 +109,6 @@ def download_shorts(shorts_collection, channel_type, api):
     f.close()
     
     
-    
-
-
 def remove(sheet, row):
 	# iterate the row object
 	for cell in row:
@@ -114,7 +121,7 @@ def remove(sheet, row):
 	# and remove the row
 	sheet.delete_rows(row[0].row, 1)
 
-main('anime', 35)
+main('music', 10)
 def sports_highlight(path):
 
     from videos import download_video, get_video_info, divide_video, detect_background_change, search_video

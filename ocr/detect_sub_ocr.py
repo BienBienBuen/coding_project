@@ -1,14 +1,16 @@
 import cv2
-import cv2
 import numpy as np
 import pytesseract
 import os
 import math
 from pathlib import Path
-
-INPUT_DIR = "./videos_storage/"
-OUTPUT_DIR = "./videos_storage/"
-
+import re
+from difflib import SequenceMatcher
+import pandas as pd
+INPUT_DIR = "./"
+OUTPUT_DIR = "./"
+#first detect where the subtitle is 
+#limit detection to this region 
 ################################## CV2 FUNCTIONS ########################
 class CV2_HELPER:
 
@@ -119,7 +121,7 @@ class BOXES_HELPER():
         text_vertical_margin = 12
         organized_tesseract_dictionary = self.get_organized_tesseract_dictionary(d)
         lines_with_words = self.get_lines_with_words(organized_tesseract_dictionary)
-        # print(lines_with_words)
+        #print(lines_with_words)
         for line in lines_with_words:
             x = line['left']
             y = line['top']
@@ -134,7 +136,7 @@ class BOXES_HELPER():
                                 color=(0, 255, 0),
                                 thickness=2)
         return frame
-
+#boxes here
     def show_boxes_words(self, d, frame):
         text_vertical_margin = 12
         n_boxes = len(d['level'])
@@ -148,7 +150,18 @@ class BOXES_HELPER():
                                     color=(0, 255, 0), thickness=2)
         return frame
 
-
+    def add_subtitle(self, d, frame):
+        text_vertical_margin = 12
+        n_boxes = len(d['level'])
+        for i in range(n_boxes):
+            if (int(float(d['conf'][i])) > 60) and not (d['text'][i].isspace()):  # Words
+                (x, y, w, h) = (d['left'][i], d['top'][i], d['width'][i], d['height'][i])
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                frame = cv2.putText(frame, text=d['text'][i], org=(x, y - text_vertical_margin),
+                                    fontFace=cv2.FONT_HERSHEY_DUPLEX,
+                                    fontScale=1,
+                                    color=(0, 255, 0), thickness=2)
+        return frame
 class OCR_HANDLER:
 
     def __init__(self, video_filepath, cv2_helper, ocr_type="WORDS"):
@@ -162,8 +175,11 @@ class OCR_HANDLER:
         self._fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # Change to 'MP4V' if this doesn't work on your OS.
         self.out_extension = '.mp4'
         self.out_name = self.video_name + '_boxes' + self.out_extension
+        self.sublist = []
+        self.x, self.y, self.w, self.h = 0,0,1000,1000
 
     ########## EXTRACT FRAMES AND FIND WORDS #############
+    #important stuff here
     def process_frames(self):
 
         frame_name = './' + self.frames_folder + '/' + self.video_name + '_frame_'
@@ -173,11 +189,13 @@ class OCR_HANDLER:
 
         video = cv2.VideoCapture(self.video_filepath)
         self.fps = round(video.get(cv2.CAP_PROP_FPS))  # get the FPS of the video_filepath
+        #this data is sorta important
         frames_durations, frame_count = self.get_saving_frames_durations(video, self.fps)  # list of point to save
 
         print("SAVING VIDEO:", frame_count, "FRAMES AT", self.fps, "FPS")
 
         idx = 0
+        #x,y,w,h = 100,500,900,300
         print(":", end='', flush=True)
         while True:
             print("=", end='', flush=True)
@@ -194,8 +212,21 @@ class OCR_HANDLER:
             if frame_duration >= closest_duration:
                 # if closest duration is less than or equals the frame duration, then save the frame
                 output_name = frame_name + str(idx) + '.png'
-                frame = self.ocr_frame(frame)
+                #here is where we make the modification to cut the frame into specific parts
+
+                #first find region of interest within the first 5% frames, and apply region of interest to the rest of the video
+                # crop_frame = frame[y:y+h, x:x+w]
+                # return crop_frame
+                """                
+                if idx == 30:
+                    frame = self.cv2_helper.binarization_otsu(self.cv2_helper.get_grayscale(frame))
+                    x,y,w,h = cv2.boundingRect(frame)
+                """
+                crop_frame = frame[self.y:self.y+self.h, self.x:self.x+self.w]
+                frame, sub = self.ocr_frame(crop_frame)
                 cv2.imwrite(output_name, frame)
+                #get subtitle data
+                self.sublist.append((idx,sub))
 
                 if (idx % 10 == 0) and (idx > 0):
                     print(">")
@@ -214,7 +245,7 @@ class OCR_HANDLER:
         video.release()
 
     def assemble_video(self):
-
+        #not important, only video assembly
         print("ASSEMBLING NEW VIDEO")
 
         images = [img for img in os.listdir(self.frames_folder) if img.endswith(".png")]  # Careful with the order
@@ -222,7 +253,9 @@ class OCR_HANDLER:
 
         frame = cv2.imread(os.path.join(self.frames_folder, images[0]))
         height, width, layers = frame.shape
-
+        #key stuff here, frame.shape
+        # half = height//2
+        # top = frame[:half, :]
         video = cv2.VideoWriter(OUTPUT_DIR + self.out_name, self._fourcc, self.fps, (width, height))
 
         for image in images:
@@ -259,12 +292,31 @@ class OCR_HANDLER:
 
         im, d = self.compute_best_preprocess(self.cv2_helper.get_grayscale(frame))
 
-        if (self.ocr_type == "LINES"):
-            frame = self.boxes_helper.show_boxes_lines(d, frame)
-        else:
-            frame = self.boxes_helper.show_boxes_words(d, frame)
+        #function to remove blank space in d
+        try:
+            raw_text=d['text']
+        except TypeError:
+            raw_text = ['']
 
-        return frame
+        text = [t for t in raw_text if t != '' and len(t) > 1 or t == 'I']
+        for i in range (len(text)):
+             text[i]=re.sub(r'[\W_]+', '', text[i])
+        joined = ' '.join(text)
+
+        """
+        for index in d:
+            index = [pos for pos in index if index != 1]
+            pass
+        """
+        try:
+            if (self.ocr_type == "LINES"):
+                frame = self.boxes_helper.show_boxes_lines(d, frame)
+            else:
+                #for subtitles ocr type should just be lines
+                frame = self.boxes_helper.show_boxes_words(d, frame)
+        except Exception:
+            pass
+        return frame, joined
 
     def compute_best_preprocess(self, frame):
         def f(count, mean):
@@ -289,7 +341,10 @@ class OCR_HANDLER:
                 im = self.cv2_helper.dilate(im)
 
             # Compute mean conf:
+            #pytesseract is important here
+            #use the config argument
             d = pytesseract.image_to_data(im, output_type=pytesseract.Output.DICT)
+            #s = pytesseract.image_to_string(im, output_type=pytesseract.Output.DICT)
             confs = [int(float(d['conf'][i])) for i in range(len(d['text'])) if not (d['text'][i].isspace())]
             confs = [i for i in confs if i > 60]
 
@@ -306,6 +361,46 @@ class OCR_HANDLER:
         return best_im, best_d
 
 
+    def sort_list(self):
+        list = self.sublist
+        j=0
+        masterlist = []
+        for i in range(len(list)):
+
+            #print(j)
+            frame = list[i][0]
+            sub = list[i][1]
+        
+            similarity = SequenceMatcher(None, sub, list[j][1]).ratio()
+
+            if similarity <=0.40:
+                time_tuple=(j/self.fps,frame/self.fps)
+                sub_list = [list[j+k][1] for k in range(i-j)]
+                masterlist.append((time_tuple, sub_list))
+                j=frame
+            elif i == len(list)-1:
+                time_tuple=(j/self.fps,frame/self.fps)
+                sub_list = [list[j+k][1] for k in range(i-j+1)]
+                masterlist.append((time_tuple, sub_list))
+
+        self.sublist = masterlist
+
+    def find_best_sub(self):
+        l = self.sublist
+        masterlist = []
+        for i in range(len(l)):
+            df = pd.Series(l[i][1]).astype(str)
+            count = df.value_counts()
+            sub = list(count.head().index)[0]
+            new_tuple = (l[i][0],sub)
+            masterlist.append(new_tuple)
+        self.sublist = masterlist
+        return masterlist
+
+
+
+
+#final func
 def detect(filename, ocr_type):
     if os.path.isfile(filename):
         ocr_handler = OCR_HANDLER(filename, CV2_HELPER(),ocr_type)
@@ -313,7 +408,12 @@ def detect(filename, ocr_type):
         ocr_handler.assemble_video()
         print("OCR PROCESS FINISHED: OUTPUT FILE => " + ocr_handler.out_name)
 
+        print(ocr_handler.sublist)
+        ocr_handler.sort_list()
+        print(ocr_handler.find_best_sub())
+        #location = ocr_handler.calculate_location()
+
     else:
         print("FILE NOT FOUND: BYE")
-        
-detect('vid7.mp4','LINES')
+#WORDS
+detect('vid9.mp4','WORDS')
