@@ -411,6 +411,8 @@ def detect(filename, ocr_type):
         print(ocr_handler.sublist)
         ocr_handler.sort_list()
         print(ocr_handler.find_best_sub())
+        df = pd.Series(ocr_handler.sublist)
+        df.to_csv(OUTPUT_DIR)
         #location = ocr_handler.calculate_location()
 
     else:
