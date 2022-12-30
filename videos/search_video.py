@@ -69,7 +69,8 @@ def check_shorts_update(channel_name, new):
 def convert_csv_to_excel(channel_type):
     import pandas as pd
     csv = pd.read_csv(f'{channel_type}.csv')
-    excelWriter = pd.ExcelWriter(f'/Users/Tiger/Desktop/videos_storage/{channel_type}.xlsx')
+    excelWriter = pd.ExcelWriter(f'/Users/bx/Desktop/videos_storage/{channel_type}.xlsx')
+    #excelWriter = pd.ExcelWriter(f'/Users/Tiger/Desktop/videos_storage/{channel_type}.xlsx')
     csv.to_excel(excelWriter)
     excelWriter.save()
 
