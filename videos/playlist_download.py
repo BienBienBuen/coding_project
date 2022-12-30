@@ -80,7 +80,7 @@ def main(url):
 
     print('\nconnecting . . .\n')
     print()
-
+    count = 0
     for link in our_links:
         try:
             yt = YouTube(link)
@@ -96,13 +96,15 @@ def main(url):
         if main_title not in x:
             if True:
                 
-                    vid = yt.streams.filter(progressive=True, file_extension='mp4', custom_filter_functions=[lambda s: (s.resolution == '1080p') or (s.resolution == '720p')]).first()
+                    vid = yt.streams.filter(adaptive=True).first()
                         
                     print('Downloading. . . ' + vid.default_filename + ' and its file size -> ' + str(round(vid.filesize / (1024 * 1024), 2)) + ' MB.')
                 
                     vid.download(SAVEPATH)
+                    vid = yt.streams.filter(only_audio=True).first()
+                    vid.download(SAVEPATH, f'{count}.mp4')
                     print('Video Downloaded')
-                
+                    count += 1
             else:
                 print('something is wrong.. please rerun the script')
         else:

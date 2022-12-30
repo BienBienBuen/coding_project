@@ -15,11 +15,11 @@ def create_new_dir(video_name, path):
     os.mkdir(path)
     return path, new
 
-def generate_final_clips(vid_name, time_stamps, time_limit, vid_path):
+def generate_final_clips(vid_path, vid_name, time_stamps, time_limit):
     sub_clip_count = 0
     
     try:
-        vid_collection_path = os.path.join(f'./coding_project/videos_storage/'+ vid_name + '_collection')
+        vid_collection_path = vid_path + '_collection'
         os.mkdir(vid_collection_path)
     except: pass
     random.shuffle(time_stamps)
@@ -61,10 +61,10 @@ def generate_final_clips(vid_name, time_stamps, time_limit, vid_path):
 #time_stamps = [(0.0, 0.6), (0.6, 1.97), (1.97, 4.67), (4.67, 19.55), (19.55, 34.63), (34.63, 49.72), (49.72, 64.8), (64.8, 79.88), (79.88, 94.99), (94.99, 110.08), (110.08, 125.16), (125.16, 139.77), (139.77, 154.85), (154.85, 169.94), (169.94, 185.02), (185.02, 200.1), (200.1, 215.18), (215.18, 230.26), (230.26, 245.38), (245.38, 260.46), (260.46, 275.54), (275.54, 283.65), (283.65, 298.73), (298.73, 313.81), (313.81, 316.05), (316.05, 328.93), (328.93, 344.01), (344.01, 359.09), (359.09, 374.17), (374.17, 389.26), (389.26, 407.24), (407.24, 410.48)]
 #generate_final_clips('dance', time_stamps, 35, './coding_project/videos_storage/dance.mp4')
 
-def simple_divide(dir_name, vid_name, start_time, time_per_clip, vid_path):
+def simple_divide(vid_path, start_time, time_per_clip):
     video = mpy.VideoFileClip(vid_path)
     audio = mpy.AudioFileClip(vid_path)
-    vid_collection_path = os.path.join(f'./coding_project/videos_storage/anime/{dir_name}/' + vid_name + '_collection')
+    vid_collection_path = os.path.join(vid_path[:-3] + 'collection')
     os.mkdir(vid_collection_path)
     print(video.duration)
     count = 0
@@ -76,22 +76,18 @@ def simple_divide(dir_name, vid_name, start_time, time_per_clip, vid_path):
             break
         
         video_subclip = video.subclip(start, end)
-        audio_subclip = audio.subclip(start, end)
-        video_subclip.set_audio(audio_subclip)
-        destination = os.path.join(vid_collection_path, f'{vid_name}_{count}.mp4')
-        try:
-            video_subclip.write_videofile(destination, fps=30, threads=4, codec="mpeg4")
-            video_subclip.close()
-            count += 1
-        except: pass
+        audio_subclip = audio.subclip(start+1, end-1)
+        video_subclip.audio = (audio_subclip)
+        destination1 = os.path.join(vid_collection_path, f'{count}.mp4')
+        destination2 = os.path.join(vid_collection_path, f'{count}.wav')
+        #audio_subclip.write_audiofile(filename = destination2, codec = 'pcm_s32le')
+        video_subclip.write_videofile(destination1, threads=4, codec="libx264", bitrate = '4500k', audio=True)
+        
+        video_subclip.close()
+        count += 1
+        
         
 
 import os
-path = '/Users/Tiger/Desktop/videos_storage/anime/PLECYMF/'
-dir_list = os.listdir(path)
-
-count = 0
-dir_name = 'PLECYMF'
-for i in range(len(dir_list)):
-    count+= 1
-    simple_divide(dir_name, f'vid{count}', 10, 20, f'/Users/Tiger/Desktop/videos_storage/{dir_name}/{dir_list[i]}')
+path = '/Users/Tiger/Desktop/videos_storage/sal.mp4'
+simple_divide(path, 0, 20)

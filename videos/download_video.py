@@ -1,8 +1,7 @@
 from unicodedata import name
-from pyyoutube import Api
 import yt_dlp 
 import os
-from TikTokAPI import TikTokAPI
+from TikTokApi import TikTokApi
 import requests
 
 #from main import get_newest_video
@@ -58,17 +57,7 @@ def download_tiktok_video(api, number, output_path):
     for n in number:
         api.downloadVideoById(video_id=video_list[n][0], save_path= output_path + str(video_list[n][0]) + '.mp4', )
     """
-def download_tiktok_video_by_ID(api, video_id):
-    s = api.getVideoById(video_id='7109188785673473323')
 
-    thumb_url = s['itemInfo']['itemStruct']['video']['cover']
-    id = s['itemInfo']['itemStruct']['video']['id']
-
-    api.downloadVideoById(video_id=id, save_path= './coding_project/videos_storage/14.mp4' )
-    import urllib.request
-    urllib.request.urlretrieve(thumb_url, f'./coding_project/videos_storage/{id}.jpg')
-#api = TikTokAPI()
-#download_tiktok_video(api, 5, './coding_project/videos_storage/')
 
 import moviepy.editor as mp
 from PIL import Image
@@ -92,23 +81,42 @@ def add_images(input_path, image_path):
     final.write_videofile("edited.mp4")
 #add_images('./coding_project/videos_storage/14.mp4', './coding_project/videos_storage/heart.jpg')
 
-def download_yt_vid(path, folder_name, link):
+def download_yt_vid(path, link, filename):
     from pytube import YouTube
     yt = YouTube(link)
-    vid = yt.streams.filter(progressive=True, file_extension='mp4', custom_filter_functions=[lambda s: (s.resolution == '1080p') or (s.resolution == '720p') or (s.resolution == '480p')]).first()
-    vid.download(path + folder_name)
+    vid = yt.streams.get_highest_resolution()
+    vid.download(path, filename= filename + '.mp4')
+    #vid = yt.streams.filter(only_audio= True).first()
+    #vid.download(output_path = path, filename= filename + '_audio.mp4')
 
 def download_image(image_url, output_path, name):
     img_data = requests.get(image_url).content
     with open(output_path + name, 'wb') as handler:
         handler.write(img_data)
-       
 
-"""
+
 
 path = '/Users/Tiger/Desktop/videos_storage/'
-folder_name = 'anime'
-link = 'https://i.ytimg.com/vi/10ZLarl9DLo/maxresdefault.jpg'
+folder_name = ''
+link = 'https://www.youtube.com/shorts/DoXDAfLse6Q'
 
-download_image(link, path, 'h.png')
-"""
+download_yt_vid(path + folder_name, link, '2')
+
+def download_insta_vids(username, number_of_vids):
+    from pathlib import Path
+    from instaloader import Instaloader, Profile 
+    L = Instaloader()
+    PROFILE = username #instagram username for profile you want to download data
+    profile = Profile.from_username(L.context, PROFILE)
+    posts_sorted_by_likes = sorted(profile.get_posts(), key=lambda post: post.date,reverse=True)
+    videos = []
+    for post in posts_sorted_by_likes:
+        if post.is_video: videos.append(post)
+
+    video_selected = videos[0:number_of_vids] #to download from only 2 posts
+    #for post in video_selected:
+     #   L.download_post(post, Path(f'/Users/Tiger/Desktop/videos_storage/{username}'))
+    L.login(user='xiaokangzou9', passwd='s?C?2t9F$AXAjx$')
+    L.download_stories(userids = [19410587], filename_target = Path(f'/Users/Tiger/Desktop/videos_storage/{username} stories'))
+
+#download_insta_vids('zo', 3)

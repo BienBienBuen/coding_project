@@ -5,47 +5,6 @@ import os
 """
 path_1 = '/Users/bx/Documents/GitHub/coding_project/videos/Dad Slander.mp4'
 path_2 = '/Users/Tiger/Desktop/GitHub/coding_project/videos/vid3.mp4'
-cap = cv2.VideoCapture(path_1)
-video_fps = cap.get(cv2.CAP_PROP_FPS),
-total_frames = cap.get(cv2.CAP_PROP_FRAME_COUNT)
-height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
-"""
-js1 = """
-function escramble_758(){
-var a,b,c
-a='+1 '
-b='84-'
-a+='425-'
-b+='7450'
-c='9'
-document.write(a+c+b)
-}
-escramble_758()
-""".replace("document.write", "return ")
-
-js2 = """
-var search = require('youtube-heatmap');
-getHeatMap('https://www.youtube.com/watch?v=_lEzN8C5c7k')
-    .then(heatMap => {
-        console.log(heatMap)
-    })
-"""
-# result = js2py.eval_js(js1)
-
-"""
-vid = cv2.VideoCapture('lebron.mp4')
-pTime = 0
-while True:
-    success, img = vid.read()
-    cv2.imshow("Image", img)
-    cTime = time.time()
-    fps = 1/(cTime - pTime)
-    pTime = cTime
-
-    #在每一帧放字幕
-    cv2.putText(img )
-    cv2.waitKey(1)
 """
 
 from scenedetect import open_video, SceneManager, split_video_ffmpeg
@@ -70,7 +29,7 @@ def standardize_scene_list(scene_list):
                        round(scene_list[i][1].get_seconds(), 2)))
         timestamp.append(stamp)
     return timestamp
-
+"""
 path_1 = '/Users/bx/Documents/GitHub/coding_project/videos/Dad Slander.mp4'
 path_2 = '/Users/Tiger/Desktop/videos_storage/anime/PLECYMF/Anime Edits  TikTok Compilation  Part 1 🔥.mp4'
 #test
@@ -78,3 +37,4 @@ x = split_video_into_scenes(path_2, 92)
 print(standardize_scene_list(x))
 
 # tiktok_dance: 12
+"""
