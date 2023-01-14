@@ -412,10 +412,10 @@ def detect(filename, ocr_type):
         ocr_handler.sort_list()
         print(ocr_handler.find_best_sub())
         df = pd.Series(ocr_handler.sublist)
-        df.to_csv(OUTPUT_DIR)
+        df.to_csv(f'{OUTPUT_DIR}/{filename}.csv')
         #location = ocr_handler.calculate_location()
 
     else:
         print("FILE NOT FOUND: BYE")
 #WORDS
-detect('vid9.mp4','WORDS')
+detect('vid7.mp4','WORDS')

@@ -23,10 +23,12 @@ basketball_highlight_channels = ['PureSweat', 'OTEATL', 'killerjunior23', 'Trist
 
 anime_channels = ['AniMemes08', 'UzumakiMadara', 'animixed106', 'animeshorts2910', 'animeshorts3852', 'viisual_ice8016', 
 'SarotsiX', 'hokage_minato_shorts', 'CrunchyrollCollection', 'upsidedownart09', 'Animeme_TV', 'ouranimax8661']
-
-anime_channels = ['animixed106', 'animeshorts2910', 'animeshorts3852', 'hokage_minato_shorts', 'upsidedownart09', 
-'ouranimax8661', '_Namikaze_Naruto', 'leang_vengse_anime_edit', 'hmmYeahIDK']
-
+#'NotSafe' 'janerijk4046'
+game_channels = ['Daaninator', 'BaileysDad', 'TeamKSA', 'Crusher_21', '1st', 'DeekoShorts', 'GEVids', 'spy.animes',
+    'MooseShorts', 'camman18', 'TwiShorts', 'BRAWLMAKER', 'minecraftnutiy', 'fvdge','hellfrozen9971',
+    'theWizCR', 'ClashRoyaleTeam', 'royleplus2546']
+#'bobdealanl'
+music_channels = ['maxgrabel', 'muzicclout', 'JarredJermaine', 'ArcNorthDaily', 'LandenPurifoy']
 def main(channel_type, number_of_vids, type, scene_cut):
     from videos import search_video
     with open(f'{channel_type}.csv', 'w') as f:

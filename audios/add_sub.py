@@ -171,6 +171,29 @@ def generate_subtitles(video_path, dest, sub_path, bool, language):
             temp_audiofile="temp-audio.m4a", remove_temp=True, codec="libx264", audio_codec="aac")
 
 
+def generate_subtitles(video_path, dest, subs, language):
+
+    generator = lambda txt: TextClip(txt, font="Songti-SC-Black", fontsize=40, 
+                                    color='black', bg_color = 'yellow', align='south')
+    generator_en = lambda txt: TextClip(txt, font="Apple-SD-Gothic-NeoI-SemiBold", fontsize=32, 
+                                    color='black', bg_color = 'yellow', align='south')                   
+    """
+    subs = [((0, 4), 'subs1'),
+            ((4, 9), 'subs2'),
+            ((9, 12), 'subs3'),
+            ((12, 16), 'subs4')]
+    """
+    subs_translated = [translate.translate(sub, language=language) for sub in subs]
+    subtitles = SubtitlesClip(subs_translated, generator)
+    subtitles_og = SubtitlesClip(subs, generator_en)
+    video = VideoFileClip(video_path)
+
+    result = CompositeVideoClip([video, subtitles.set_pos(('center', 0.93), relative=True), 
+                                        subtitles_og.set_position(('center', 0.87), relative=True)])
+    result.write_videofile(dest + "output.mp4", fps=video.fps, 
+            temp_audiofile="temp-audio.m4a", remove_temp=True, codec="libx264", audio_codec="aac")
+
+
 if __name__ == '__main__':
     path = "/Users/bx/Documents/GitHub/coding_project/vid7.mp4"
     dest = "/Users/bx/Documents/GitHub/coding_project/videos/"
